@@ -3,7 +3,12 @@ import {Panel} from "./styles/PanelDiv";
 
 const EnterGamePanel = () => {
     return <Panel>
-        <p>Enter the game</p>
+        <p>Войти в игру</p>
+        <div style={{display: "table-cell", width: 100, paddingBottom: 30}}>
+            <input placeholder="Номер игры"></input>
+        </div>
+
+        <button>Играть!</button>
     </Panel>
 }
 
