@@ -1,14 +1,18 @@
-import React from "react";
+import React, {ChangeEvent, EventHandler, MouseEventHandler} from "react";
 import {Panel} from "./styles/PanelDiv";
 
-const CreateGamePanel = () => {
+const CreateGamePanel = ({playersCount, incrementOnClick, decrementOnClick}: {
+    playersCount: number
+    incrementOnClick: MouseEventHandler<HTMLButtonElement>,
+    decrementOnClick: MouseEventHandler<HTMLButtonElement>,
+}) => {
     return <Panel>
         <p>Создать игру</p>
         <div style={{display: "flex"}}>
             <p>Количество игроков</p>
-            <button>{"<"}</button>
-            <p>0</p>
-            <button>{">"}</button>
+            <button onClick={decrementOnClick}>{"<"}</button>
+            <p>{playersCount}</p>
+            <button onClick={incrementOnClick}>{">"}</button>
         </div>
         <button>Создать игру!</button>
     </Panel>
