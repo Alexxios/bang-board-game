@@ -1,10 +1,26 @@
-import React from 'react';
+import React, {ChangeEvent, useState} from 'react';
 import {view} from "@yoskutik/react-vvm";
 import WaitingViewModel from "../view_models/WaitingViewModel";
 
-const WaitingView = view(WaitingViewModel)(({viewModel: WaitingViewModel}) => {
+import styled from "styled-components";
+import {PlayerWaitingPanel} from "../ui/orgnisms/PlayerWaitingPanel";
 
-    return <p>Waiting page</p>
+const CenterDiv = styled.div`
+    display: flex;
+    justify-content: center;
+`
+
+
+const WaitingView = view(WaitingViewModel)(({viewModel}) => {
+
+    return <>
+
+        <CenterDiv>
+            {viewModel.players.map(player => {
+                return <PlayerWaitingPanel nickName={player.nickname}></PlayerWaitingPanel>
+            })}
+        </CenterDiv>
+
+    </>;
 })
-
 export default WaitingView;

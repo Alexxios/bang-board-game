@@ -5,6 +5,7 @@ import ReactDOM from 'react-dom/client';
 import {createBrowserRouter, RouterProvider} from "react-router-dom";
 import reportWebVitals from './reportWebVitals';
 import HomeView from "./views/HomeView";
+import WaitingView from "./views/WaitingView";
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
@@ -15,6 +16,10 @@ const router = createBrowserRouter([
         path: "/",
         element: <HomeView/>
     },
+    {
+        path: '/waiting-room',
+        element: <WaitingView/>
+    }
 ]);
 
 
