@@ -7,6 +7,14 @@ class GameViewModel extends ViewModel {
         super();
         makeObservable(this);
     }
+
+    startGame = () => {
+        // stable web socket connection
+    }
+
+    endGame = () => {
+        // unstable web socket connection
+    }
 }
 
 export default GameViewModel

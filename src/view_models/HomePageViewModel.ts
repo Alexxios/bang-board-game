@@ -1,5 +1,6 @@
 import {ViewModel} from "@yoskutik/react-vvm";
 import {makeObservable, observable} from "mobx";
+import {HomePageRepository} from "../repositories/HomePageRepository";
 
 class HomePageViewModel extends ViewModel {
     private readonly maxPlayersCount = 7;
@@ -7,14 +8,16 @@ class HomePageViewModel extends ViewModel {
 
     @observable currentPlayersCount: number;
 
-    constructor() {
+    constructor(private app: HomePageRepository) {
         super();
         makeObservable(this);
         this.currentPlayersCount = 4;
     }
 
     createGame = (nickname: string) => {
+        if (this.checkUserNickname(nickname)){
 
+        }
     }
 
     enterGame = (nickname: string) => {
@@ -35,6 +38,21 @@ class HomePageViewModel extends ViewModel {
         }else{
             this.currentPlayersCount--;
         }
+    }
+
+    checkUserNickname = (nickname: string) => {
+        if (nickname.length < 3){
+            return false;
+        }
+
+        let result = false;
+        this.app.checkNickname(nickname).then(
+            data => {
+                result = data;
+            }
+        )
+
+        return result;
     }
 }
 

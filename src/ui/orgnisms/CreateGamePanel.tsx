@@ -1,10 +1,11 @@
 import React, {ChangeEvent, EventHandler, MouseEventHandler} from "react";
 import {Panel} from "./styles/PanelDiv";
 
-const CreateGamePanel = ({playersCount, incrementOnClick, decrementOnClick}: {
+const CreateGamePanel = ({playersCount, incrementOnClick, decrementOnClick, onClick}: {
     playersCount: number
     incrementOnClick: MouseEventHandler<HTMLButtonElement>,
     decrementOnClick: MouseEventHandler<HTMLButtonElement>,
+    onClick: MouseEventHandler<HTMLButtonElement>
 }) => {
     return <Panel>
         <p>Создать игру</p>
@@ -14,7 +15,7 @@ const CreateGamePanel = ({playersCount, incrementOnClick, decrementOnClick}: {
             <p>{playersCount}</p>
             <button onClick={incrementOnClick}>{">"}</button>
         </div>
-        <button>Создать игру!</button>
+        <button onClick={onClick}>Создать игру!</button>
     </Panel>
 }
 

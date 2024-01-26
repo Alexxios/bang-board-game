@@ -12,7 +12,7 @@ const CenterDiv = styled.div`
 
 
 const WaitingView = view(WaitingViewModel)(({viewModel}) => {
-
+    // create a web socket connection
     return <>
 
         <CenterDiv>
