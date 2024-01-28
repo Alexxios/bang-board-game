@@ -12,14 +12,18 @@ const CenterDiv = styled.div`
 
 
 const WaitingView = view(WaitingViewModel)(({viewModel}) => {
-    // create a web socket connection
-    return <>
 
-        <CenterDiv>
+    return <>
+        <div>
+            <CenterDiv>
+                <h1>{viewModel.gameId}</h1>
+            </CenterDiv>
+            <CenterDiv>
             {viewModel.players.map(player => {
-                return <PlayerWaitingPanel nickName={player.nickname}></PlayerWaitingPanel>
-            })}
-        </CenterDiv>
+                    return <PlayerWaitingPanel nickName={player.nickname}></PlayerWaitingPanel>
+                })}
+            </CenterDiv>
+        </div>
 
     </>;
 })

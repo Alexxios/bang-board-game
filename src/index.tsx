@@ -17,8 +17,8 @@ const router = createBrowserRouter([
         element: <HomeView/>
     },
     {
-        path: '/waiting-room',
-        element: <WaitingView/>
+        path: '/waiting-room/:gameId',
+        element: <WaitingView/>,
     }
 ]);
 
