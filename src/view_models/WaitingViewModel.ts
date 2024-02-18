@@ -24,8 +24,7 @@ class WaitingViewModel extends ViewModel {
         this.app = new WaitingPageRepository(new WaitingPageAPI(), this.gameId, this.nickname, (message: IMessage) => {
             runInAction(
                 () => {
-                    let pl: string[] = JSON.parse(message.body);
-                    this.players = pl.map(p => {return {nickname: p}});
+                    this.players = JSON.parse(message.body);
                 }
             )
 
@@ -37,19 +36,6 @@ class WaitingViewModel extends ViewModel {
         return game.usersNicknames;
     }
 
-    private fillPlayers = () => {
-        const playersPromise = this.getPlayers(this.gameId);
-
-        playersPromise.then(
-            gamePlayers => {
-                gamePlayers.map(
-                    player => {
-                        this.players.push({nickname: player});
-                    }
-                )
-            }
-        )
-    }
 }
 
 export default WaitingViewModel
