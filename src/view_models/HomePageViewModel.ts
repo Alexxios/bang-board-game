@@ -1,7 +1,6 @@
 import {ViewModel} from "@yoskutik/react-vvm";
 import {makeObservable, observable} from "mobx";
 import {HomePageRepository} from "../repositories/HomePageRepository";
-import {useNavigate} from "react-router-dom";
 import {injectable} from "tsyringe";
 import HomePageAPI from "../API/HomePageAPI";
 

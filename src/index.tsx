@@ -6,6 +6,7 @@ import {createBrowserRouter, RouterProvider} from "react-router-dom";
 import reportWebVitals from './reportWebVitals';
 import HomeView from "./views/HomeView";
 import WaitingView from "./views/WaitingView";
+import GameView from "./views/GameView";
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
@@ -19,6 +20,10 @@ const router = createBrowserRouter([
     {
         path: '/waiting-room/:gameId',
         element: <WaitingView/>,
+    },
+    {
+        path: '/game/:gameId',
+        element: <GameView/>,
     }
 ]);
 

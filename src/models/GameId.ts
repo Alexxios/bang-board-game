@@ -1,5 +1,5 @@
 
-enum GameStatus {
+export enum GameStatus {
     WaitingPlayers,
     Playing,
     Ended

@@ -5,7 +5,6 @@ import {NicknameCheckResult} from "../models/NicknameCheckResult";
 
 @singleton()
 export class HomePageRepository {
-    @observable error = '';
 
     constructor(private api: HomePageAPI) {
         makeObservable(this);

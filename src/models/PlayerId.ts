@@ -1,5 +1,5 @@
 
-enum Status {
+export enum Status {
     Ready,
     NotReady
 }

@@ -15,7 +15,7 @@ interface ConnectionMessage {
 export class WaitingPageRepository {
     private stompClient: CompatClient;
 
-    constructor(private api: WaitingPageAPI, gameId: string, nickname: string, onConnectionMessage: Function) {
+    constructor(private api: WaitingPageAPI, gameId: string, nickname: string, onMessage: Function) {
         makeObservable(this);
 
 
@@ -27,7 +27,7 @@ export class WaitingPageRepository {
                 this.stompClient.subscribe(
                     "/games/" + gameId + "/connected-users",
                     (message) => {
-                        onConnectionMessage(message);
+                        onMessage(message);
                     }
                 );
 
