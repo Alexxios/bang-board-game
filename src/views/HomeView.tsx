@@ -4,7 +4,7 @@ import React, {ChangeEvent, ChangeEventHandler, MouseEventHandler, useState} fro
 import styled from "styled-components";
 import {view} from "@yoskutik/react-vvm";
 import HomePageViewModel from "../view_models/HomePageViewModel";
-import {useNavigate} from "react-router-dom";
+import {Navigate, useNavigate} from "react-router-dom";
 
 const CenterDiv = styled.div`
     display: flex;
@@ -12,7 +12,7 @@ const CenterDiv = styled.div`
 `
 
 const HomeView = view(HomePageViewModel)(({viewModel}) => {
-
+    const [isNeedNavigation, setIsNeedNavigation] = useState(false);
     const [nickname, setNickName] = useState('');
     const [gameId, setGameId] = useState('');
     const [playersCount, setPlayersCount] = useState(4)
@@ -28,9 +28,13 @@ const HomeView = view(HomePageViewModel)(({viewModel}) => {
     let navigate = useNavigate();
 
     const redirect = (gameId: string) => {
-        navigate(`waiting-room/${gameId}`);
+        setIsNeedNavigation(true);
+        setGameId(gameId);
     }
 
+    if (isNeedNavigation){
+        return <Navigate to={`waiting-room/${gameId}`}/>;
+    }
 
     return <>
         <CenterDiv>

@@ -11,4 +11,8 @@ export class GamePageRepository {
         makeObservable(this);
     }
 
+    getGame = (gameId: string) => {
+        return this.api.getGame(gameId);
+    }
+
 }

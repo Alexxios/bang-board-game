@@ -11,34 +11,38 @@ import {useNavigate} from "react-router-dom";
 class WaitingViewModel extends ViewModel {
     @observable players: PlayerId[] = [];
     @observable gameId: string;
+    @observable isRaady: boolean;
     private nickname: string;
 
     constructor(private app: WaitingPageRepository) {
         super();
         makeObservable(this);
 
+
         this.gameId = localStorage.getItem('gameId')!;
         this.nickname = localStorage.getItem('nickname')!;
+        this.isRaady = false;
 
         this.app = new WaitingPageRepository(new WaitingPageAPI(), this.gameId, this.nickname, this.onMessage);
     }
 
     private getPlayers = async (gameId: string) => {
         const game = await this.app.getGame(gameId);
-        return game.usersNicknames;
+        return game.players;
     }
 
     private onMessage = (message: IMessage) => {
         runInAction(() => {
             this.players = JSON.parse(message.body);
         });
-        console.log("REDIRECT");
-        let navigate = useNavigate();
-        navigate(`game/${this.gameId}`);
+
+
+        if (this.players.length >= 2){
+            this.isRaady = true;
+        }
 
         if (this.players.every(player => { return player.status == Status.Ready})){
-
-
+            this.isRaady = true;
         }
     }
 }
