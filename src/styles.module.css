@@ -1,0 +1,24 @@
+@font-face {
+  font-family: 'Marmelad';
+  src: local('Marmelad'), url(../public/fonts/Marmelad/Marmelad-Regular.ttf) format('truetype');
+}
+
+.panel {
+  font-family: 'Marmelad';
+  text-align: center;
+
+  color: #DF7453;
+  background-color: #F9C270;
+
+  border-radius: 5%;
+  border-width: 10px;
+  border-color: #AB7A30;
+}
+
+.entry {
+  font-size: 20pt;
+  color: #DF7453;
+  background-color: #FFE1B4;
+
+  border: 0;
+}
