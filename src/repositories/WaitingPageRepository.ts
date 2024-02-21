@@ -37,6 +37,10 @@ export class WaitingPageRepository {
             });
     }
 
+    closeConnection = () => {
+        this.stompClient.disconnect();
+    }
+
     getGame = async (gameId: string) => {
         const data = await this.api.getGame(gameId);
 

@@ -26,6 +26,10 @@ class WaitingViewModel extends ViewModel {
         this.app = new WaitingPageRepository(new WaitingPageAPI(), this.gameId, this.nickname, this.onMessage);
     }
 
+    closeConnection = () => {
+        this.app.closeConnection();
+    }
+
     private getPlayers = async (gameId: string) => {
         const game = await this.app.getGame(gameId);
         return game.players;

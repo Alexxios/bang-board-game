@@ -30,7 +30,6 @@ class HomePageViewModel extends ViewModel {
                             localStorage.setItem('gameId', gameId);
                         }
                     )
-
                 }
             }
         )
