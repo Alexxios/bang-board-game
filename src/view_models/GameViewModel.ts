@@ -7,9 +7,11 @@ import {GameId} from "../models/GameId";
 import GamePageAPI from "../API/GamePageAPI";
 import {GameEventsHolder} from "../models/GameEventsHolder";
 import {IMessage} from "@stomp/stompjs";
+import {GameEntity} from "../models/GameEntity";
 
 class GameViewModel extends ViewModel {
     private gameId = '';
+    @observable gameEntity: undefined|GameEntity;
     @observable gameIdEntity: undefined|GameId;
 
     constructor(private app: GamePageRepository) {
@@ -21,6 +23,12 @@ class GameViewModel extends ViewModel {
         this.app.initGame(this.gameId);
 
         this.app.getGame(this.gameId).then(
+            result => {
+                this.gameEntity = result.data;
+            }
+        );
+
+        this.app.getGameId(this.gameId).then(
             result => {
                 this.gameIdEntity = result.data;
             }

@@ -61,6 +61,10 @@ export class GamePageRepository {
         return this.api.getGame(gameId);
     }
 
+    getGameId = (gameId: string) => {
+        return this.api.getGameId(gameId);
+    }
+
     initGame = (gameId: string) => {
         this.api.initGame(gameId);
     }

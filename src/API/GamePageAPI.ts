@@ -4,6 +4,7 @@ import {NicknameCheckResult} from "../models/NicknameCheckResult";
 import {EnterGameResult} from "../models/EnterGameResult";
 import {GameId} from "../models/GameId";
 import {GamePageRepository} from "../repositories/GamePageRepository";
+import {GameEntity} from "../models/GameEntity";
 
 @injectable()
 class GamePageAPI extends API{
@@ -13,7 +14,11 @@ class GamePageAPI extends API{
     }
 
     getGame = (gameId: string) => {
-        return GamePageAPI.api.get<GameId>(`/get-game?gameId=${gameId}`);
+        return GamePageAPI.api.get<GameEntity>(`/get-game?gameId=${gameId}`);
+    }
+
+    getGameId = (gameId: string) => {
+        return GamePageAPI.api.get<GameId>(`/get-gameId?gameId=${gameId}`);
     }
 
     initGame = (gameId: string) => {

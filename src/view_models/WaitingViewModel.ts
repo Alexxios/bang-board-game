@@ -41,7 +41,7 @@ class WaitingViewModel extends ViewModel {
         });
 
 
-        if (this.players.length >= 2){
+        if (this.players.length >= 2){ // КОСТЫЛЬ!!! УБРАТЬ!!!
             this.isRaady = true;
         }
 
