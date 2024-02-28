@@ -1,23 +1,25 @@
 import {ViewModel} from "@yoskutik/react-vvm";
 import {makeObservable, observable} from "mobx";
-import {WaitingPageRepository} from "../repositories/WaitingPageRepository";
 import {GamePageRepository} from "../repositories/GamePageRepository";
-import {PlayerId} from "../models/PlayerId";
 import {GameId} from "../models/GameId";
 import GamePageAPI from "../API/GamePageAPI";
 import {GameEventsHolder} from "../models/GameEventsHolder";
 import {IMessage} from "@stomp/stompjs";
 import {GameEntity} from "../models/GameEntity";
+import {MotionResponse} from "../models/MotionResponse";
 
 class GameViewModel extends ViewModel {
     private gameId = '';
+    private nickname = '';
     @observable gameEntity: undefined|GameEntity;
     @observable gameIdEntity: undefined|GameId;
+    @observable motionPlayer: MotionResponse = {player: 0};
 
     constructor(private app: GamePageRepository) {
         super();
         makeObservable(this);
         this.gameId = localStorage.getItem('gameId')!;
+        this.nickname = localStorage.getItem('nickname')!;
         this.app = new GamePageRepository(new GamePageAPI(), this.gameId, this.gameEvents);
 
         this.app.initGame(this.gameId);
@@ -35,8 +37,13 @@ class GameViewModel extends ViewModel {
         );
     }
 
-    private onMotion = (message: IMessage) =>  {
+    public getNickname(){
+        return this.nickname;
+    }
 
+
+    private onMotion = (message: IMessage) =>  {
+        this.motionPlayer = JSON.parse(message.body);
     }
 
     private onKeepCard = (message: IMessage) =>  {
