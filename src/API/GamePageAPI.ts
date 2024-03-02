@@ -25,6 +25,10 @@ class GamePageAPI extends API{
         GamePageAPI.api.post(`/init-game`, gameId);
     }
 
+    nextMotion = (gameId: string) => {
+        GamePageAPI.api.post(`/next-motion`, gameId);
+    }
+
 }
 
 export default GamePageAPI;

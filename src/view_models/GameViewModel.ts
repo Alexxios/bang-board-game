@@ -1,5 +1,5 @@
 import {ViewModel} from "@yoskutik/react-vvm";
-import {makeObservable, observable} from "mobx";
+import {makeObservable, observable, runInAction} from "mobx";
 import {GamePageRepository} from "../repositories/GamePageRepository";
 import {GameId} from "../models/GameId";
 import GamePageAPI from "../API/GamePageAPI";
@@ -7,20 +7,22 @@ import {GameEventsHolder} from "../models/GameEventsHolder";
 import {IMessage} from "@stomp/stompjs";
 import {GameEntity} from "../models/GameEntity";
 import {MotionResponse} from "../models/MotionResponse";
+import {PlayingCards} from "../enums/PlayingCards";
+import {CardReceive} from "../models/CardReceive";
 
 class GameViewModel extends ViewModel {
     private gameId = '';
     private nickname = '';
     @observable gameEntity: undefined|GameEntity;
     @observable gameIdEntity: undefined|GameId;
-    @observable motionPlayer: MotionResponse = {player: 0};
+    @observable cards: PlayingCards[] = [];
 
     constructor(private app: GamePageRepository) {
         super();
         makeObservable(this);
         this.gameId = localStorage.getItem('gameId')!;
         this.nickname = localStorage.getItem('nickname')!;
-        this.app = new GamePageRepository(new GamePageAPI(), this.gameId, this.gameEvents);
+        this.app = new GamePageRepository(new GamePageAPI(), this.gameId, this.nickname, this.gameEvents);
 
         this.app.initGame(this.gameId);
 
@@ -37,16 +39,28 @@ class GameViewModel extends ViewModel {
         );
     }
 
-    public getNickname(){
+    public getNickname = () => {
         return this.nickname;
     }
 
+    public nextMotion = () => {
+        this.app.nextMotion(this.gameId);
+    }
 
     private onMotion = (message: IMessage) =>  {
-        this.motionPlayer = JSON.parse(message.body);
+        let motionPlayer: MotionResponse = JSON.parse(message.body);
+        if (this.gameEntity){
+            this.gameEntity.motionPlayerIndex = motionPlayer.player;
+        }
+
     }
 
     private onKeepCard = (message: IMessage) =>  {
+        console.log(message.body);
+        let card: CardReceive = JSON.parse(message.body);
+        runInAction(() => {
+            this.cards.push(card.card);
+        })
 
     }
 

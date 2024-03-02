@@ -6,12 +6,13 @@ import GamePageAPI from "../API/GamePageAPI";
 import {CompatClient, Stomp} from "@stomp/stompjs";
 import SockJS from "sockjs-client";
 import {GameEventsHolder} from "../models/GameEventsHolder";
+import {KeepCardMessage} from "../models/KeepCardMessage";
 
 @singleton()
 export class GamePageRepository {
     private stompClient: CompatClient;
 
-    constructor(private api: GamePageAPI, gameId: string, gameEvents: GameEventsHolder) {
+    constructor(private api: GamePageAPI, gameId: string, nickname: string, gameEvents: GameEventsHolder) {
         makeObservable(this);
 
 
@@ -67,6 +68,10 @@ export class GamePageRepository {
 
     initGame = (gameId: string) => {
         this.api.initGame(gameId);
+    }
+
+    nextMotion = (gameId: string) => {
+        this.api.nextMotion(gameId);
     }
 
 }

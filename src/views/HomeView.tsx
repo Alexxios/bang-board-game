@@ -6,7 +6,7 @@ import {view} from "@yoskutik/react-vvm";
 import HomePageViewModel from "../view_models/HomePageViewModel";
 import {Navigate, useNavigate} from "react-router-dom";
 
-const CenterDiv = styled.div`
+export const CenterDiv = styled.div`
     display: flex;
     justify-content: center;
 `
