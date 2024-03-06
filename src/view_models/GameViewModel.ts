@@ -9,12 +9,14 @@ import {GameEntity} from "../models/GameEntity";
 import {MotionResponse} from "../models/MotionResponse";
 import {PlayingCards} from "../enums/PlayingCards";
 import {CardReceive} from "../models/CardReceive";
+import {GameEvent} from "../models/GameEvent";
+import {OnCardPlay} from "../models/OnCardPlay";
 
 class GameViewModel extends ViewModel {
     private gameId = '';
     private nickname = '';
-    @observable gameEntity: undefined|GameEntity;
-    @observable gameIdEntity: undefined|GameId;
+    @observable gameEntity: undefined | GameEntity;
+    @observable gameIdEntity: undefined | GameId;
     @observable cards: PlayingCards[] = [];
 
     constructor(private app: GamePageRepository) {
@@ -24,22 +26,14 @@ class GameViewModel extends ViewModel {
         this.nickname = localStorage.getItem('nickname')!;
         this.app = new GamePageRepository(new GamePageAPI(), this.gameId, this.nickname, this.gameEvents);
 
-        this.app.initGame(this.gameId);
+        this.app.initGame(this.gameId).then(
+            () => {this.updateGameInfo()}
+        )
 
-        this.app.getGame(this.gameId).then(
-            result => {
-                this.gameEntity = result.data;
-            }
-        );
-
-        this.app.getGameId(this.gameId).then(
-            result => {
-                this.gameIdEntity = result.data;
-            }
-        );
     }
 
     public getNickname = () => {
+        console.log(this.nickname);
         return this.nickname;
     }
 
@@ -47,33 +41,64 @@ class GameViewModel extends ViewModel {
         this.app.nextMotion(this.gameId);
     }
 
-    private onMotion = (message: IMessage) =>  {
+    public sendEvent = (event: GameEvent) => {
+        console.log(event.getterIndex + ' ' + event.senderIndex);
+        this.app.sendEvent(this.gameId, event);
+    }
+
+    public getPlayerIndexByNickname = (nickname: string) => {
+        for (let i = 0; i < this.gameIdEntity!.players.length; ++i) {
+            if (this.gameIdEntity!.players[i].nickname === nickname) {
+                return i;
+            }
+        }
+    }
+
+    public getCardByIndex = (cardIndex: number) => {
+        let playerIndex = this.getPlayerIndexByNickname(this.nickname)!;
+        return this.gameEntity!.players[playerIndex].cards[cardIndex];
+    }
+
+    private onMotion = (message: IMessage) => {
         let motionPlayer: MotionResponse = JSON.parse(message.body);
-        if (this.gameEntity){
+        if (this.gameEntity) {
             this.gameEntity.motionPlayerIndex = motionPlayer.player;
         }
+    }
+
+    private onKeepCard = (message: IMessage) => {
+        let cardReceive: CardReceive = JSON.parse(message.body);
+        this.gameEntity!.players[cardReceive.playerIndex].cards.push(cardReceive.card);
+    }
+
+    private onMatchEnd = (message: IMessage) => {
 
     }
 
-    private onKeepCard = (message: IMessage) =>  {
-        console.log(message.body);
-        let card: CardReceive = JSON.parse(message.body);
-        runInAction(() => {
-            this.cards.push(card.card);
-        })
+    private onCardPlay = (message: IMessage) => {
+        let cardPlay: OnCardPlay = JSON.parse(message.body)
+        this.gameEntity!.players[cardPlay.playerIndex].cards.splice(cardPlay.cardIndex, 1)
+        this.updateGameInfo()
+    }
+
+    private onPlayerDeath = (message: IMessage) => {
 
     }
 
-    private onMatchEnd = (message: IMessage) =>  {
+    private updateGameInfo = () => {
+        this.app.getGame(this.gameId).then(
+            result => {
+                this.gameEntity = result.data;
+                console.log('response ' + typeof this.gameEntity)
+            }
+        );
 
-    }
-
-    private onCardPlay = (message: IMessage) =>  {
-
-    }
-
-    private onPlayerDeath = (message: IMessage) =>  {
-
+        this.app.getGameId(this.gameId).then(
+            result => {
+                this.gameIdEntity = result.data;
+                console.log('response id ' + typeof this.gameIdEntity)
+            }
+        );
     }
 
     private gameEvents: GameEventsHolder = {

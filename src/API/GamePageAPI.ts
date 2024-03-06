@@ -5,6 +5,7 @@ import {EnterGameResult} from "../models/EnterGameResult";
 import {GameId} from "../models/GameId";
 import {GamePageRepository} from "../repositories/GamePageRepository";
 import {GameEntity} from "../models/GameEntity";
+import {GameEvent} from "../models/GameEvent";
 
 @injectable()
 class GamePageAPI extends API{
@@ -21,12 +22,16 @@ class GamePageAPI extends API{
         return GamePageAPI.api.get<GameId>(`/get-gameId?gameId=${gameId}`);
     }
 
-    initGame = (gameId: string) => {
-        GamePageAPI.api.post(`/init-game`, gameId);
+    initGame = async (gameId: string) => {
+        await GamePageAPI.api.post(`/init-game`, gameId);
     }
 
     nextMotion = (gameId: string) => {
         GamePageAPI.api.post(`/next-motion`, gameId);
+    }
+
+    sendEvent = (gameId: string, event: GameEvent) => {
+        GamePageAPI.api.post(`/handle-event?gameId=${gameId}`, event)
     }
 
 }

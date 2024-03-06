@@ -7,6 +7,7 @@ import {CompatClient, Stomp} from "@stomp/stompjs";
 import SockJS from "sockjs-client";
 import {GameEventsHolder} from "../models/GameEventsHolder";
 import {KeepCardMessage} from "../models/KeepCardMessage";
+import {GameEvent} from "../models/GameEvent";
 
 @singleton()
 export class GamePageRepository {
@@ -66,12 +67,16 @@ export class GamePageRepository {
         return this.api.getGameId(gameId);
     }
 
-    initGame = (gameId: string) => {
-        this.api.initGame(gameId);
+    initGame = async (gameId: string) => {
+        await this.api.initGame(gameId);
     }
 
     nextMotion = (gameId: string) => {
         this.api.nextMotion(gameId);
+    }
+
+    sendEvent = (gameId: string, event: GameEvent) => {
+        this.api.sendEvent(gameId, event);
     }
 
 }
