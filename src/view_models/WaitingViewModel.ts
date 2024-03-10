@@ -9,44 +9,44 @@ import {useNavigate} from "react-router-dom";
 
 @singleton()
 class WaitingViewModel extends ViewModel {
-    @observable players: PlayerId[] = [];
-    @observable gameId: string;
-    @observable isRaady: boolean;
-    private nickname: string;
+    @observable players: PlayerId[] = []
+    @observable gameId: string
+    @observable isRaady: boolean
+    private nickname: string
 
     constructor(private app: WaitingPageRepository) {
-        super();
-        makeObservable(this);
+        super()
+        makeObservable(this)
 
 
-        this.gameId = localStorage.getItem('gameId')!;
-        this.nickname = localStorage.getItem('nickname')!;
-        this.isRaady = false;
+        this.gameId = localStorage.getItem('gameId')!
+        this.nickname = localStorage.getItem('nickname')!
+        this.isRaady = false
 
-        this.app = new WaitingPageRepository(new WaitingPageAPI(), this.gameId, this.nickname, this.onMessage);
+        this.app = new WaitingPageRepository(new WaitingPageAPI(), this.gameId, this.nickname, this.onMessage)
     }
 
     closeConnection = () => {
-        this.app.closeConnection();
+        this.app.closeConnection()
     }
 
     private getPlayers = async (gameId: string) => {
-        const game = await this.app.getGame(gameId);
-        return game.players;
+        const game = await this.app.getGame(gameId)
+        return game.players
     }
 
     private onMessage = (message: IMessage) => {
         runInAction(() => {
-            this.players = JSON.parse(message.body);
-        });
+            this.players = JSON.parse(message.body)
+        })
 
 
         if (this.players.length >= 2){ // КОСТЫЛЬ!!! УБРАТЬ!!!
-            this.isRaady = true;
+            this.isRaady = true
         }
 
         if (this.players.every(player => { return player.status == Status.Ready})){
-            this.isRaady = true;
+            this.isRaady = true
         }
     }
 }

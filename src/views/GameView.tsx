@@ -11,24 +11,24 @@ import {type} from "node:os";
 
 
 const GameView = view(GameViewModel)(({viewModel}) => {
-    const [players, setPlayers] = useState<PlayerProps[]>([]);
-    const [selectedCardIndex, setSelectedCard] = useState(0);
+    const [players, setPlayers] = useState<PlayerProps[]>([])
+    const [selectedCardIndex, setSelectedCard] = useState(0)
     if ( viewModel.gameEntity){
         console.log("rerender " + viewModel.gameEntity?.players[0].cards.length.toString())
     }
 
-    let motionPlayerIndex = 0;
-    let isLoaded = viewModel.gameEntity && viewModel.gameIdEntity;
+    let motionPlayerIndex = 0
+    let isLoaded = viewModel.gameEntity && viewModel.gameIdEntity
     if (isLoaded){
-        players.length = 0;
-        motionPlayerIndex = viewModel.gameEntity!.motionPlayerIndex;
+        players.length = 0
+        motionPlayerIndex = viewModel.gameEntity!.motionPlayerIndex
         for (let i = 0; i < viewModel.gameIdEntity!.players.length; ++i){
-            let playerNickname = viewModel.gameIdEntity!.players[i].nickname;
-            let playerHealth = viewModel.gameEntity!.players[i].health;
-            let playerRole = viewModel.gameEntity!.players[i].role;
-            let playerWeapon = viewModel.gameEntity!.players[i].weapon;
-            let playerMotion = (viewModel.gameEntity!.motionPlayerIndex == i);
-            let playerCards = viewModel.gameEntity!.players[i].cards;
+            let playerNickname = viewModel.gameIdEntity!.players[i].nickname
+            let playerHealth = viewModel.gameEntity!.players[i].health
+            let playerRole = viewModel.gameEntity!.players[i].role
+            let playerWeapon = viewModel.gameEntity!.players[i].weapon
+            let playerMotion = (viewModel.gameEntity!.motionPlayerIndex == i)
+            let playerCards = viewModel.gameEntity!.players[i].cards
 
             players.push({
                 nickname: playerNickname,
@@ -37,16 +37,16 @@ const GameView = view(GameViewModel)(({viewModel}) => {
                 weapon: playerWeapon,
                 cards: playerCards,
                 isDoingMotion: playerMotion
-            });
+            })
         }
     }
 
     const onCardDragStart = (cardIndex: number) => {
-        setSelectedCard(cardIndex);
+        setSelectedCard(cardIndex)
     }
 
     const onPanelDrop = (getterNickname: string) => {
-        console.log(getterNickname);
+        console.log(getterNickname)
         let event: GameEvent = {
             senderIndex: viewModel.getPlayerIndexByNickname(viewModel.getNickname())!,
             getterIndex: viewModel.getPlayerIndexByNickname(getterNickname)!,

@@ -8,32 +8,32 @@ import {Navigate, useNavigate} from "react-router-dom";
 
 export const CenterDiv = styled.div`
     display: flex;
-    justify-content: center;
+    justify-content: center
 `
 
 const HomeView = view(HomePageViewModel)(({viewModel}) => {
-    const [isNeedNavigation, setIsNeedNavigation] = useState(false);
-    const [nickname, setNickName] = useState('');
-    const [gameId, setGameId] = useState('');
+    const [isNeedNavigation, setIsNeedNavigation] = useState(false)
+    const [nickname, setNickName] = useState('')
+    const [gameId, setGameId] = useState('')
     const [playersCount, setPlayersCount] = useState(4)
 
     const changeNickname = (event: ChangeEvent<HTMLInputElement>) => {
-        setNickName(event.target.value);
+        setNickName(event.target.value)
     }
 
     const changeGameId = (event: ChangeEvent<HTMLInputElement>) => {
-        setGameId(event.target.value);
+        setGameId(event.target.value)
     }
 
-    let navigate = useNavigate();
+    let navigate = useNavigate()
 
     const redirect = (gameId: string) => {
-        setIsNeedNavigation(true);
-        setGameId(gameId);
+        setIsNeedNavigation(true)
+        setGameId(gameId)
     }
 
     if (isNeedNavigation){
-        return <Navigate to={`waiting-room/${gameId}`}/>;
+        return <Navigate to={`waiting-room/${gameId}`}/>
     }
 
     return <>
@@ -52,10 +52,10 @@ const HomeView = view(HomePageViewModel)(({viewModel}) => {
                 incrementOnClick={viewModel.incrementPlayersCount}
                 decrementOnClick={viewModel.decrementPlayersCount}
                 onClick={() => {
-                    let gameId = viewModel.createGame(nickname);
+                    let gameId = viewModel.createGame(nickname)
                     gameId.then(
                         gameId => {
-                            redirect(gameId);
+                            redirect(gameId)
                         }
                     )
                 }}
@@ -63,17 +63,17 @@ const HomeView = view(HomePageViewModel)(({viewModel}) => {
             <EnterGamePanel
                 onChange={changeGameId}
                 onClick={() => {
-                    let isValid = viewModel.enterGame(nickname, gameId);
+                    let isValid = viewModel.enterGame(nickname, gameId)
                     isValid.then(
                         result => {
                             if (result){
-                                redirect(gameId);
+                                redirect(gameId)
                             }
                         }
                     )
                 }}/>
         </CenterDiv>
-    </>;
+    </>
 })
 
-export default HomeView;
+export default HomeView

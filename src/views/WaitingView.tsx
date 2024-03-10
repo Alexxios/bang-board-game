@@ -14,7 +14,7 @@ const CenterDiv = styled.div`
 
 const WaitingView = view(WaitingViewModel)(({viewModel}) => {
     if (viewModel.isRaady){
-        viewModel.closeConnection();
+        viewModel.closeConnection()
         return <Navigate to={`/game/${viewModel.gameId}`}/>
     }
 
@@ -30,6 +30,6 @@ const WaitingView = view(WaitingViewModel)(({viewModel}) => {
             </CenterDiv>
         </div>
 
-    </>;
+    </>
 })
 export default WaitingView;

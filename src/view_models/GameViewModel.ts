@@ -13,18 +13,18 @@ import {GameEvent} from "../models/GameEvent";
 import {OnCardPlay} from "../models/OnCardPlay";
 
 class GameViewModel extends ViewModel {
-    private gameId = '';
-    private nickname = '';
-    @observable gameEntity: undefined | GameEntity;
-    @observable gameIdEntity: undefined | GameId;
-    @observable cards: PlayingCards[] = [];
+    private gameId = ''
+    private nickname = ''
+    @observable gameEntity: undefined | GameEntity
+    @observable gameIdEntity: undefined | GameId
+    @observable cards: PlayingCards[] = []
 
     constructor(private app: GamePageRepository) {
-        super();
-        makeObservable(this);
-        this.gameId = localStorage.getItem('gameId')!;
-        this.nickname = localStorage.getItem('nickname')!;
-        this.app = new GamePageRepository(new GamePageAPI(), this.gameId, this.nickname, this.gameEvents);
+        super()
+        makeObservable(this)
+        this.gameId = localStorage.getItem('gameId')!
+        this.nickname = localStorage.getItem('nickname')!
+        this.app = new GamePageRepository(new GamePageAPI(), this.gameId, this.nickname, this.gameEvents)
 
         this.app.initGame(this.gameId).then(
             () => {this.updateGameInfo()}
@@ -33,23 +33,21 @@ class GameViewModel extends ViewModel {
     }
 
     public getNickname = () => {
-        console.log(this.nickname);
-        return this.nickname;
+        return this.nickname
     }
 
     public nextMotion = () => {
-        this.app.nextMotion(this.gameId);
+        this.app.nextMotion(this.gameId)
     }
 
-    public sendEvent = (event: GameEvent) => {
-        console.log(event.getterIndex + ' ' + event.senderIndex);
-        this.app.sendEvent(this.gameId, event);
+    public sendEvent = async (event: GameEvent) => {
+        await this.app.sendEvent(this.gameId, event)
     }
 
     public getPlayerIndexByNickname = (nickname: string) => {
         for (let i = 0; i < this.gameIdEntity!.players.length; ++i) {
             if (this.gameIdEntity!.players[i].nickname === nickname) {
-                return i;
+                return i
             }
         }
     }
@@ -60,15 +58,13 @@ class GameViewModel extends ViewModel {
     }
 
     private onMotion = (message: IMessage) => {
-        let motionPlayer: MotionResponse = JSON.parse(message.body);
-        if (this.gameEntity) {
-            this.gameEntity.motionPlayerIndex = motionPlayer.player;
-        }
+        let motionPlayer: MotionResponse = JSON.parse(message.body)
+        this.updateGameInfo()
     }
 
     private onKeepCard = (message: IMessage) => {
         let cardReceive: CardReceive = JSON.parse(message.body);
-        this.gameEntity!.players[cardReceive.playerIndex].cards.push(cardReceive.card);
+        this.updateGameInfo()
     }
 
     private onMatchEnd = (message: IMessage) => {
@@ -77,8 +73,8 @@ class GameViewModel extends ViewModel {
 
     private onCardPlay = (message: IMessage) => {
         let cardPlay: OnCardPlay = JSON.parse(message.body)
-        this.gameEntity!.players[cardPlay.playerIndex].cards.splice(cardPlay.cardIndex, 1)
         this.updateGameInfo()
+        this.gameEntity!.players[cardPlay.playerIndex].cards.splice(cardPlay.cardIndex, 1)
     }
 
     private onPlayerDeath = (message: IMessage) => {
@@ -88,17 +84,17 @@ class GameViewModel extends ViewModel {
     private updateGameInfo = () => {
         this.app.getGame(this.gameId).then(
             result => {
-                this.gameEntity = result.data;
+                this.gameEntity = result.data
                 console.log('response ' + typeof this.gameEntity)
             }
-        );
+        )
 
         this.app.getGameId(this.gameId).then(
             result => {
-                this.gameIdEntity = result.data;
+                this.gameIdEntity = result.data
                 console.log('response id ' + typeof this.gameIdEntity)
             }
-        );
+        )
     }
 
     private gameEvents: GameEventsHolder = {

@@ -75,8 +75,8 @@ export class GamePageRepository {
         this.api.nextMotion(gameId);
     }
 
-    sendEvent = (gameId: string, event: GameEvent) => {
-        this.api.sendEvent(gameId, event);
+    sendEvent = async (gameId: string, event: GameEvent) => {
+        await this.api.sendEvent(gameId, event);
     }
 
 }
