@@ -1,13 +1,11 @@
 import React, {useState} from 'react';
 import {view} from "@yoskutik/react-vvm";
 import GameViewModel from "../view_models/GameViewModel";
-import {CurrentPlayerGameTablet} from "../ui/moleculas/CurrentPlayerGameTablet";
+import {CurrentPlayerGameTablet} from "../ui/orgnisms/CurrentPlayerGameTablet";
 import {PlayerProps} from "../ui/orgnisms/interfaces/PlayersProps";
-import {EnemyPlayerGameTablet} from "../ui/moleculas/EnemyPlayerGameTablet";
+import {EnemyPlayerGameTablet} from "../ui/orgnisms/EnemyPlayerGameTablet";
 import {CenterDiv} from "./HomeView";
 import {GameEvent} from "../models/GameEvent";
-import {PlayingCards} from "../enums/PlayingCards";
-import {type} from "node:os";
 
 
 const GameView = view(GameViewModel)(({viewModel}) => {
@@ -29,6 +27,7 @@ const GameView = view(GameViewModel)(({viewModel}) => {
             let playerWeapon = viewModel.gameEntity!.players[i].weapon
             let playerMotion = (viewModel.gameEntity!.motionPlayerIndex == i)
             let playerCards = viewModel.gameEntity!.players[i].cards
+            let playerCharacter = viewModel.gameEntity!.players[i].character
 
             players.push({
                 nickname: playerNickname,
@@ -36,6 +35,7 @@ const GameView = view(GameViewModel)(({viewModel}) => {
                 role: playerRole,
                 weapon: playerWeapon,
                 cards: playerCards,
+                character: playerCharacter,
                 isDoingMotion: playerMotion
             })
         }
@@ -60,8 +60,7 @@ const GameView = view(GameViewModel)(({viewModel}) => {
 
     return <div>
         <CenterDiv>
-        {players &&
-            players.map(playerProps => {
+        {players.map(playerProps => {
                 if (playerProps.nickname === viewModel.getNickname()) {
                     return <CurrentPlayerGameTablet props={playerProps} dragProps={dragProps}/>
                 } else {

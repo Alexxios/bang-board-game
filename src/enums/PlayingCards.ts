@@ -1,4 +1,4 @@
-export enum PlayingCards {
+export enum PlayingCard {
     //weapons
     Winchester = 'Winchester',
     Remington = 'Remington',

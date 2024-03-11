@@ -7,7 +7,7 @@ import {GameEventsHolder} from "../models/GameEventsHolder";
 import {IMessage} from "@stomp/stompjs";
 import {GameEntity} from "../models/GameEntity";
 import {MotionResponse} from "../models/MotionResponse";
-import {PlayingCards} from "../enums/PlayingCards";
+import {PlayingCard} from "../enums/PlayingCards";
 import {CardReceive} from "../models/CardReceive";
 import {GameEvent} from "../models/GameEvent";
 import {OnCardPlay} from "../models/OnCardPlay";
@@ -17,7 +17,7 @@ class GameViewModel extends ViewModel {
     private nickname = ''
     @observable gameEntity: undefined | GameEntity
     @observable gameIdEntity: undefined | GameId
-    @observable cards: PlayingCards[] = []
+    @observable cards: PlayingCard[] = []
 
     constructor(private app: GamePageRepository) {
         super()
@@ -57,39 +57,41 @@ class GameViewModel extends ViewModel {
         return this.gameEntity!.players[playerIndex].cards[cardIndex];
     }
 
-    private onMotion = (message: IMessage) => {
+
+
+    private onMotion = async (message: IMessage) => {
         let motionPlayer: MotionResponse = JSON.parse(message.body)
-        this.updateGameInfo()
+        await this.updateGameInfo()
     }
 
-    private onKeepCard = (message: IMessage) => {
+    private onKeepCard = async (message: IMessage) => {
         let cardReceive: CardReceive = JSON.parse(message.body);
-        this.updateGameInfo()
+        await this.updateGameInfo()
     }
 
     private onMatchEnd = (message: IMessage) => {
 
     }
 
-    private onCardPlay = (message: IMessage) => {
+    private onCardPlay = async (message: IMessage) => {
         let cardPlay: OnCardPlay = JSON.parse(message.body)
-        this.updateGameInfo()
-        this.gameEntity!.players[cardPlay.playerIndex].cards.splice(cardPlay.cardIndex, 1)
+        await this.updateGameInfo()
+        //this.gameEntity!.players[cardPlay.playerIndex].cards.splice(cardPlay.cardIndex, 1)
     }
 
     private onPlayerDeath = (message: IMessage) => {
 
     }
 
-    private updateGameInfo = () => {
-        this.app.getGame(this.gameId).then(
+    private updateGameInfo = async () => {
+        await this.app.getGame(this.gameId).then(
             result => {
                 this.gameEntity = result.data
                 console.log('response ' + typeof this.gameEntity)
             }
         )
 
-        this.app.getGameId(this.gameId).then(
+        await this.app.getGameId(this.gameId).then(
             result => {
                 this.gameIdEntity = result.data
                 console.log('response id ' + typeof this.gameIdEntity)

@@ -1,8 +1,9 @@
 import React from 'react';
-import {PlayerProps} from "../orgnisms/interfaces/PlayersProps";
+import {PlayerProps} from "./interfaces/PlayersProps";
 import {Role} from "../../enums/Roles";
-import {Panel} from "../orgnisms/styles/PanelDiv";
-import {WeaponCard} from "./WeaponCard";
+import {Panel} from "./styles/PanelDiv";
+import {WeaponCard} from "../moleculas/WeaponCard";
+import {CharacterCard} from "../moleculas/CharacterCard";
 
 export const EnemyPlayerGameTablet = ({props, onDrop}: { props: PlayerProps, onDrop: Function }) => {
 
@@ -27,7 +28,7 @@ export const EnemyPlayerGameTablet = ({props, onDrop}: { props: PlayerProps, onD
         <div style={{display: "flex", justifyContent: "left"}}>
             {healthImages}
         </div>
-        <WeaponCard card={props.weapon} canDropOn={false} onDrop={() => {
-        }}/>
+        <WeaponCard card={props.weapon} canDropOn={false} onDrop={() => {}}/>
+        <CharacterCard character={props.character}/>
     </Panel>
 }

@@ -1,5 +1,6 @@
 export enum Role {
     Sheriff,
     Assistant,
-    Bandit
+    Bandit,
+    Renegat
 }

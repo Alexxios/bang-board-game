@@ -1,11 +1,11 @@
 import React from 'react';
-import {PlayerProps} from "../orgnisms/interfaces/PlayersProps";
-import {PlayingCards} from "../../enums/PlayingCards";
-import {Panel} from "../orgnisms/styles/PanelDiv";
-import {CardInHands} from "./CardInHands";
-import {DragProps} from "../orgnisms/interfaces/DragProps";
+import {PlayerProps} from "./interfaces/PlayersProps";
+import {Panel} from "./styles/PanelDiv";
+import {CardInHands} from "../moleculas/CardInHands";
+import {DragProps} from "./interfaces/DragProps";
 import {CenterDiv} from "../../views/HomeView";
-import {WeaponCard} from "./WeaponCard";
+import {WeaponCard} from "../moleculas/WeaponCard";
+import {CharacterCard} from "../moleculas/CharacterCard";
 
 export const CurrentPlayerGameTablet = ({props, dragProps}: { props: PlayerProps, dragProps: DragProps }) => {
 
@@ -31,7 +31,12 @@ export const CurrentPlayerGameTablet = ({props, dragProps}: { props: PlayerProps
 
 
         <CenterDiv>
-            <WeaponCard card={props.weapon} canDropOn={true} onDrop={() => { dragProps.onPanelDrop(props.nickname)}}/>
+            <div style={{marginRight: 50}}>
+                <WeaponCard card={props.weapon} canDropOn={true} onDrop={() => { dragProps.onPanelDrop(props.nickname)}}/>
+                <CharacterCard character={props.character}/>
+            </div>
+
+
             <CenterDiv>
                 {props.cards.map((card, index) => {
                     return <CardInHands isDraggable={props.isDoingMotion} cardType={card} onDragStart={dragProps.onCardDragStart}

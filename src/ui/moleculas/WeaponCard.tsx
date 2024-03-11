@@ -1,4 +1,4 @@
-import {PlayingCards} from "../../enums/PlayingCards";
+import {PlayingCard} from "../../enums/PlayingCards";
 import React, {DragEventHandler} from "react";
 import styled from "styled-components";
 import {CardDiv} from "./CardInHands";
@@ -7,12 +7,11 @@ export const WeaponDiv = styled.div`
     border: solid 1px black;
     border-radius: 5px;
     padding: 5px;
-    margin-right: 50px;
     text-align: center;
 `
 
 export const WeaponCard = ({card, canDropOn, onDrop}: {
-    card: PlayingCards,
+    card: PlayingCard,
     canDropOn: boolean,
     onDrop: Function
 }) => {

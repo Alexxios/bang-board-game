@@ -7,7 +7,7 @@ import HomePageAPI from "../API/HomePageAPI";
 @injectable()
 class HomePageViewModel extends ViewModel {
     private readonly maxPlayersCount = 7
-    private readonly minPlayersCount = 4
+    private readonly minPlayersCount = 2
 
     @observable currentPlayersCount: number
 
@@ -24,7 +24,7 @@ class HomePageViewModel extends ViewModel {
             async result => {
                 if (result){
                     localStorage.setItem('nickname', nickname)
-                    await this.app.createGame(nickname).then(
+                    await this.app.createGame(nickname, this.currentPlayersCount).then(
                         data => {
                             gameId = data.data
                             localStorage.setItem('gameId', gameId)

@@ -1,11 +1,11 @@
-import {PlayingCards} from "../enums/PlayingCards";
+import {PlayingCard} from "../enums/PlayingCards";
 import {Player} from "./Player";
 import {Callback} from "./Callback";
 
 export interface GameEntity{
     motionPlayerIndex: number,
     players: Player[],
-    cards: PlayingCards[],
+    cards: PlayingCard[],
     callbacks: Callback[],
     gameId: string
 }

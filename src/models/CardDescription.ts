@@ -1,5 +1,5 @@
-import {PlayingCards} from "../enums/PlayingCards";
+import {PlayingCard} from "../enums/PlayingCards";
 
 export interface CardDescription{
-    card: PlayingCards
+    card: PlayingCard
 }

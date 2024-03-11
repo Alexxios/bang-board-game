@@ -1,6 +1,6 @@
-import {PlayingCards} from "../enums/PlayingCards";
+import {PlayingCard} from "../enums/PlayingCards";
 
 export interface CardReceive{
     playerIndex: number,
-    card: PlayingCards
+    card: PlayingCard
 }

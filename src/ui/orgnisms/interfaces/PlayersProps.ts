@@ -1,11 +1,13 @@
 import {Role} from "../../../enums/Roles";
-import {PlayingCards} from "../../../enums/PlayingCards";
+import {PlayingCard} from "../../../enums/PlayingCards";
+import {Character} from "../../../enums/Character";
 
 export interface PlayerProps{
     nickname: string,
     health: number
     role: Role,
-    weapon: PlayingCards,
-    cards: PlayingCards[],
+    weapon: PlayingCard,
+    cards: PlayingCard[],
+    character: Character,
     isDoingMotion: boolean,
 }
