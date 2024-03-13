@@ -6,6 +6,8 @@ export const CardDiv = styled.div`
     border: solid 1px black;
     border-radius: 5px;
     padding: 5px;
+    text-align: center;
+    vertical-align: middle;
 `
 
 export const CardInHands = ({isDraggable, cardType, onDragStart, index}: {
