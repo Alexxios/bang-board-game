@@ -13,8 +13,8 @@ export const EnemyPlayerGameTablet = ({props, onDrop}: { props: PlayerProps, onD
         healthImages.push(<p>*</p>)
     }
 
-    let role = 'Unknown';
-    if (props.role == Role.Sheriff) {
+    let role = 'Unknown'
+    if (props.role.toString() === Role.Sheriff) {
         role = 'Sheriff';
     }
     return <Panel onDrop={() => {
