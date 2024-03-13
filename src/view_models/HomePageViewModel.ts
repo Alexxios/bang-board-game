@@ -6,87 +6,86 @@ import HomePageAPI from "../API/HomePageAPI";
 
 @injectable()
 class HomePageViewModel extends ViewModel {
-    private readonly maxPlayersCount = 7;
-    private readonly minPlayersCount = 4;
+    private readonly maxPlayersCount = 7
+    private readonly minPlayersCount = 2
 
-    @observable currentPlayersCount: number;
+    @observable currentPlayersCount: number
 
     constructor(private app: HomePageRepository) {
-        super();
-        makeObservable(this);
-        this.app = new HomePageRepository(new HomePageAPI());
-        this.currentPlayersCount = 4;
+        super()
+        makeObservable(this)
+        this.app = new HomePageRepository(new HomePageAPI())
+        this.currentPlayersCount = 4
     }
 
     createGame = async (nickname: string) => {
-        let gameId = '';
+        let gameId = ''
         await this.checkUserNickname(nickname).then(
             async result => {
                 if (result){
-                    localStorage.setItem('nickname', nickname);
-                    await this.app.createGame(nickname).then(
+                    localStorage.setItem('nickname', nickname)
+                    await this.app.createGame(nickname, this.currentPlayersCount).then(
                         data => {
-                            gameId = data.data;
-                            localStorage.setItem('gameId', gameId);
+                            gameId = data.data
+                            localStorage.setItem('gameId', gameId)
                         }
                     )
-
                 }
             }
         )
 
-        return gameId;
+        return gameId
     }
 
     enterGame = async (nickname: string, gameId: string) => {
-        let isValid = false;
+        let isValid = false
         await this.checkUserNickname(nickname).then(
             async result => {
                 if (result){
-                    localStorage.setItem('nickname', nickname);
+                    localStorage.setItem('nickname', nickname)
                     await this.app.enterGame(nickname, gameId).then(
                         data => {
-                            isValid = data;
-                            localStorage.setItem('gameId', gameId);
+                            isValid = data
+                            localStorage.setItem('gameId', gameId)
                         }
                     )
                 }
             }
         )
 
-        return isValid;
+        return isValid
     }
 
     incrementPlayersCount = () => {
         if (this.currentPlayersCount == this.maxPlayersCount){
-            this.currentPlayersCount = this.minPlayersCount;
+            this.currentPlayersCount = this.minPlayersCount
         }else{
-            this.currentPlayersCount++;
+            this.currentPlayersCount++
         }
     }
 
     decrementPlayersCount = () => {
         if (this.currentPlayersCount == this.minPlayersCount){
-            this.currentPlayersCount = this.maxPlayersCount;
+            this.currentPlayersCount = this.maxPlayersCount
         }else{
-            this.currentPlayersCount--;
+            this.currentPlayersCount--
         }
     }
 
     private checkUserNickname = async (nickname: string) => {
         if (nickname.length < 3){
-            return false;
+            return false
         }
 
         let result = false;
         await this.app.checkNickname(nickname).then(
             data => {
-                console.log(data);
-                result = data;
+                console.log(data)
+                result = data
             }
         )
 
-        return result;
+        return result
     }
 }
 

@@ -1,3 +1,4 @@
+import {PlayerId} from "./PlayerId";
 
 export enum GameStatus {
     WaitingPlayers,
@@ -10,5 +11,5 @@ export interface GameId{
     gameId: string,
     maxPlayersCount: number,
     gameStatus: GameStatus,
-    usersNicknames: string[]
+    players: PlayerId[]
 }

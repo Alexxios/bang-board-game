@@ -16,9 +16,9 @@ export class HomePageRepository {
         return data.data.result;
     }
 
-    createGame = async (nickname: string) => {
-        const data = await this.api.createGame(nickname);
-        return data;
+    createGame = async (nickname: string, playerCount: number) => {
+        const data = await this.api.createGame(nickname, playerCount)
+        return data
     }
 
     enterGame = async (nickname: string, gameId: string) => {

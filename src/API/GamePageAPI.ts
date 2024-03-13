@@ -2,6 +2,10 @@ import {injectable, singleton} from "tsyringe";
 import {API} from "./API";
 import {NicknameCheckResult} from "../models/NicknameCheckResult";
 import {EnterGameResult} from "../models/EnterGameResult";
+import {GameId} from "../models/GameId";
+import {GamePageRepository} from "../repositories/GamePageRepository";
+import {GameEntity} from "../models/GameEntity";
+import {GameEvent} from "../models/GameEvent";
 
 @injectable()
 class GamePageAPI extends API{
@@ -10,19 +14,26 @@ class GamePageAPI extends API{
         super();
     }
 
-    checkNickname = (nickname: string) => {
-        console.log('send');
-        return GamePageAPI.api.get<NicknameCheckResult>(`/check-nickname?nickname=${nickname}`);
+    getGame = (gameId: string) => {
+        return GamePageAPI.api.get<GameEntity>(`/get-game?gameId=${gameId}`);
     }
 
-    createGame = (nickname: string) => {
-        return GamePageAPI.api.post<string>('/create-game', nickname);
+    getGameId = (gameId: string) => {
+        return GamePageAPI.api.get<GameId>(`/get-gameId?gameId=${gameId}`);
     }
 
-    enterGame = (nickname: string, gameId: string) => {
-        console.log(nickname, gameId);
-        return GamePageAPI.api.get<EnterGameResult>(`/enter-the-game/${nickname}/${gameId}`)
+    initGame = async (gameId: string) => {
+        await GamePageAPI.api.post(`/init-game`, gameId);
     }
+
+    nextMotion = (gameId: string) => {
+        GamePageAPI.api.post(`/next-motion`, gameId);
+    }
+
+    sendEvent = (gameId: string, event: GameEvent) => {
+        GamePageAPI.api.post(`/handle-event?gameId=${gameId}`, event)
+    }
+
 }
 
 export default GamePageAPI;

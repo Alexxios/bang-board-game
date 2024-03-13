@@ -10,7 +10,7 @@ class WaitingPageAPI extends API{
     }
 
     getGame = (gameId: string) => {
-        return WaitingPageAPI.api.get<GameId>(`/get-game?gameId=${gameId}`);
+        return WaitingPageAPI.api.get<GameId>(`/get-gameId?gameId=${gameId}`);
     }
 }
 
