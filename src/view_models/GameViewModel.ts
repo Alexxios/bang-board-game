@@ -57,6 +57,17 @@ class GameViewModel extends ViewModel {
         return this.gameEntity!.players[playerIndex].cards[cardIndex];
     }
 
+    public onSelectCard = (index: number) => {
+        let event: GameEvent = {
+            senderIndex: this.getPlayerIndexByNickname(this.nickname)!,
+            getterIndex: this.getPlayerIndexByNickname(this.nickname)!,
+            cardDescription: {
+                card: this.gameEntity!.cardsForSelection[index]
+            },
+            cardIndex: index
+        }
+        this.sendEvent(event)
+    }
 
 
     private onMotion = async (message: IMessage) => {
@@ -87,14 +98,12 @@ class GameViewModel extends ViewModel {
         await this.app.getGame(this.gameId).then(
             result => {
                 this.gameEntity = result.data
-                console.log('response ' + typeof this.gameEntity)
             }
         )
 
         await this.app.getGameId(this.gameId).then(
             result => {
                 this.gameIdEntity = result.data
-                console.log('response id ' + typeof this.gameIdEntity)
             }
         )
     }

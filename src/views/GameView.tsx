@@ -9,6 +9,7 @@ import {GameEvent} from "../models/GameEvent";
 import styled from "styled-components";
 import {DELETE} from "mobx/dist/types/observablemap";
 import {NextMotionButton} from "../ui/moleculas/NextMotionButton";
+import {CardSelectionPanel} from "../ui/orgnisms/CardSelectionPanel";
 
 const BottomDiv = styled.div`
     display: flex;
@@ -28,9 +29,6 @@ const TopDiv = styled.div`
 const GameView = view(GameViewModel)(({viewModel}) => {
     const [players, setPlayers] = useState<PlayerProps[]>([])
     const [selectedCardIndex, setSelectedCard] = useState(0)
-    if (viewModel.gameEntity) {
-        console.log("rerender " + viewModel.gameEntity?.players[0].cards.length.toString())
-    }
 
     let motionPlayerIndex = 0
     let isLoaded = viewModel.gameEntity && viewModel.gameIdEntity
@@ -74,21 +72,32 @@ const GameView = view(GameViewModel)(({viewModel}) => {
     }
 
     let dragProps = {onCardDragStart: onCardDragStart, onPanelDrop: onPanelDrop}
+    let isDoingMotion = viewModel.gameIdEntity?.players[motionPlayerIndex].nickname === viewModel.getNickname()
+    let needToSelect = isLoaded && isDoingMotion && viewModel.gameEntity!.cardsForSelection.length != 0
 
+    console.log(needToSelect)
     return <div>
-        <CenterDiv>
-            <TopDiv>
-                {players.map(playerProps => {
-                    if (playerProps.nickname !== viewModel.getNickname()) {
-                        return <EnemyPlayerGameTablet props={playerProps} onDrop={onPanelDrop}/>
-                    }
-                })}
-            </TopDiv>
-        </CenterDiv>
+        {
+            !needToSelect &&
+            <CenterDiv>
+                <TopDiv>
+                    {players.map(playerProps => {
+                        if (playerProps.nickname !== viewModel.getNickname()) {
+                            return <EnemyPlayerGameTablet props={playerProps} onDrop={onPanelDrop}/>
+                        }
+                    })}
+                </TopDiv>
+            </CenterDiv>
+        }
+
+        {
+            needToSelect &&
+            <CardSelectionPanel cards={viewModel.gameEntity!.cardsForSelection} onSelect={viewModel.onSelectCard}/>
+        }
 
         <BottomDiv>
             <div style={{marginLeft: 400}}>
-                {isLoaded && viewModel.gameIdEntity?.players[motionPlayerIndex].nickname === viewModel.getNickname() &&
+                {isLoaded && isDoingMotion &&
                     <NextMotionButton onClick={viewModel.nextMotion}/>}
             </div>
         </BottomDiv>

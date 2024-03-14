@@ -7,5 +7,6 @@ export interface GameEntity{
     players: Player[],
     cards: PlayingCard[],
     callbacks: Callback[],
+    cardsForSelection: PlayingCard[],
     gameId: string
 }
