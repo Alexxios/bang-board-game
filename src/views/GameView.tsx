@@ -76,6 +76,11 @@ const GameView = view(GameViewModel)(({viewModel}) => {
     let needToSelect = isLoaded && isDoingMotion && viewModel.gameEntity!.cardsForSelection.length != 0
 
     console.log(needToSelect)
+
+    if (viewModel.isDead){
+        return <h1>You are dead</h1>
+    }
+
     return <div>
         {
             !needToSelect &&

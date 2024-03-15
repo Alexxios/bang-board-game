@@ -11,6 +11,7 @@ import {CardReceive} from "../models/CardReceive";
 import {GameEvent} from "../models/GameEvent";
 import {OnCardPlay} from "../models/OnCardPlay";
 import {PlayingCard} from "../models/PlayingCard";
+import PlayerDeath from "../models/PlayerDeath";
 
 class GameViewModel extends ViewModel {
     private gameId = ''
@@ -18,6 +19,7 @@ class GameViewModel extends ViewModel {
     @observable gameEntity: undefined | GameEntity
     @observable gameIdEntity: undefined | GameId
     @observable cards: PlayingCard[] = []
+    @observable isDead: boolean = false
 
     constructor(private app: GamePageRepository) {
         super()
@@ -50,6 +52,10 @@ class GameViewModel extends ViewModel {
                 return i
             }
         }
+    }
+
+    public getPlayerNicknameByIndex = (index: number) => {
+        return this.gameIdEntity!.players[index].nickname
     }
 
     public getCardByIndex = (cardIndex: number) => {
@@ -91,7 +97,13 @@ class GameViewModel extends ViewModel {
     }
 
     private onPlayerDeath = (message: IMessage) => {
-
+        let playerDeath: PlayerDeath = JSON.parse(message.body)
+        let nickname = this.getPlayerNicknameByIndex(playerDeath.playerIndex)
+        if (nickname == this.nickname){
+            this.isDead = true
+        } else {
+            this.gameEntity!.players.splice(playerDeath.playerIndex, 1)
+        }
     }
 
     private updateGameInfo = async () => {
