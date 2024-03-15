@@ -1,6 +1,6 @@
 import {Role} from "../enums/Roles";
-import {PlayingCard} from "../enums/PlayingCards";
 import {Character} from "../enums/Character";
+import {PlayingCard} from "./PlayingCard";
 
 export interface Player{
     role: Role,

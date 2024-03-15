@@ -1,4 +1,4 @@
-import {PlayingCard} from "../enums/PlayingCards";
+import {PlayingCard} from "./PlayingCard";
 
 export interface CardDescription{
     card: PlayingCard

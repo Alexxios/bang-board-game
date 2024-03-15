@@ -1,5 +1,5 @@
-import {PlayingCard} from "../../enums/PlayingCards";
 import {CardForSelection} from "../moleculas/CardForSelection";
+import {PlayingCard} from "../../models/PlayingCard";
 
 export const CardSelectionPanel = ({cards, onSelect} : {cards: PlayingCard[], onSelect: Function}) => {
     return <>

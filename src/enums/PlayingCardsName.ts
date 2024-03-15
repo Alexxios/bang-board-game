@@ -1,4 +1,5 @@
-export enum PlayingCard {
+export enum PlayingCardName {
+    ClosedCard = 'BANG!',
     //weapons
     Winchester = 'Winchester',
     Remington = 'Remington',

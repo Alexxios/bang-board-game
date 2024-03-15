@@ -1,7 +1,6 @@
-import {PlayingCard} from "../../enums/PlayingCards";
-import React, {DragEventHandler} from "react";
+import React from "react";
 import styled from "styled-components";
-import {CardDiv} from "./CardInHands";
+import {PlayingCard} from "../../models/PlayingCard";
 
 export const WeaponDiv = styled.div`
     border: solid 1px black;
@@ -25,11 +24,11 @@ export const WeaponCard = ({card, canDropOn, onDrop}: {
               onDragOver={(e) => {
                   e.preventDefault()
               }}>
-            <h3>{card}</h3>
+            <h3>{card.cardName}</h3>
         </WeaponDiv>
     } else {
         return <WeaponDiv draggable={false}>
-            <h3>{card}</h3>
+            <h3>{card.cardName}</h3>
         </WeaponDiv>
     }
 

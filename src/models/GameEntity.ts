@@ -1,6 +1,6 @@
-import {PlayingCard} from "../enums/PlayingCards";
 import {Player} from "./Player";
 import {Callback} from "./Callback";
+import {PlayingCard} from "./PlayingCard";
 
 export interface GameEntity{
     motionPlayerIndex: number,

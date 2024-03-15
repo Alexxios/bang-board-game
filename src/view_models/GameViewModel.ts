@@ -7,10 +7,10 @@ import {GameEventsHolder} from "../models/GameEventsHolder";
 import {IMessage} from "@stomp/stompjs";
 import {GameEntity} from "../models/GameEntity";
 import {MotionResponse} from "../models/MotionResponse";
-import {PlayingCard} from "../enums/PlayingCards";
 import {CardReceive} from "../models/CardReceive";
 import {GameEvent} from "../models/GameEvent";
 import {OnCardPlay} from "../models/OnCardPlay";
+import {PlayingCard} from "../models/PlayingCard";
 
 class GameViewModel extends ViewModel {
     private gameId = ''
