@@ -94,8 +94,10 @@ class GameViewModel extends ViewModel {
     }
 
     private onMatchEnd = (message: IMessage) => {
-        let player = this.gameEntity!.players[0]
+        let matchEndInfo: MatchEnd = JSON.parse(message.body)
+        let player = this.gameEntity!.players[matchEndInfo.winnerIndex]
         localStorage.setItem('winnerRole', player.role)
+        localStorage.setItem('winnerNickname', this.getPlayerNicknameByIndex(matchEndInfo.winnerIndex))
         this.isEnded = true
     }
 

@@ -14,6 +14,7 @@ const MathEndView = view(MatchEndViewModel)(({viewModel}) => {
 
     return <>
         <h1>Game ended</h1>
+        <h1>Winner role: {viewModel.getNickname()}</h1>
         <h1>Winner role: {viewModel.getRole()}</h1>
         <button onClick={() => {setGoToMainPage(true)}}>Main page</button>
     </>

@@ -44,6 +44,7 @@ const GameView = view(GameViewModel)(({viewModel}) => {
             let playerMotion = (viewModel.gameEntity!.motionPlayerIndex == i)
             let playerCards = viewModel.gameEntity!.players[i].cards
             let playerCharacter = viewModel.gameEntity!.players[i].character
+            let isDead = viewModel.gameEntity!.players[i].isDead
 
             players.push({
                 nickname: playerNickname,
@@ -52,6 +53,7 @@ const GameView = view(GameViewModel)(({viewModel}) => {
                 weapon: playerWeapon,
                 cards: playerCards,
                 character: playerCharacter,
+                isDead: isDead,
                 isDoingMotion: playerMotion
             })
         }
@@ -93,7 +95,7 @@ const GameView = view(GameViewModel)(({viewModel}) => {
             <CenterDiv>
                 <TopDiv>
                     {players.map(playerProps => {
-                        if (playerProps.nickname !== viewModel.getNickname()) {
+                        if (playerProps.nickname !== viewModel.getNickname() && !playerProps.isDead) {
                             return <EnemyPlayerGameTablet props={playerProps} onDrop={onPanelDrop}/>
                         }
                     })}
