@@ -12,14 +12,18 @@ import {GameEvent} from "../models/GameEvent";
 import {OnCardPlay} from "../models/OnCardPlay";
 import {PlayingCard} from "../models/PlayingCard";
 import PlayerDeath from "../models/PlayerDeath";
+import {MatchEnd} from "../models/MatchEnd";
 
 class GameViewModel extends ViewModel {
     private gameId = ''
     private nickname = ''
+    private matchEndInfo: MatchEnd | undefined
+
     @observable gameEntity: undefined | GameEntity
     @observable gameIdEntity: undefined | GameId
     @observable cards: PlayingCard[] = []
     @observable isDead: boolean = false
+    @observable isEnded: boolean = false
 
     constructor(private app: GamePageRepository) {
         super()
@@ -36,6 +40,10 @@ class GameViewModel extends ViewModel {
 
     public getNickname = () => {
         return this.nickname
+    }
+
+    public getMathEndInfo = () => {
+        return this.matchEndInfo
     }
 
     public nextMotion = () => {
@@ -82,12 +90,13 @@ class GameViewModel extends ViewModel {
     }
 
     private onKeepCard = async (message: IMessage) => {
-        let cardReceive: CardReceive = JSON.parse(message.body);
         await this.updateGameInfo()
     }
 
     private onMatchEnd = (message: IMessage) => {
-
+        let player = this.gameEntity!.players[0]
+        localStorage.setItem('winnerRole', player.role)
+        this.isEnded = true
     }
 
     private onCardPlay = async (message: IMessage) => {
@@ -98,6 +107,7 @@ class GameViewModel extends ViewModel {
 
     private onPlayerDeath = (message: IMessage) => {
         let playerDeath: PlayerDeath = JSON.parse(message.body)
+
         let nickname = this.getPlayerNicknameByIndex(playerDeath.playerIndex)
         if (nickname == this.nickname){
             this.isDead = true

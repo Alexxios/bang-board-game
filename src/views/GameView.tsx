@@ -10,6 +10,7 @@ import styled from "styled-components";
 import {DELETE} from "mobx/dist/types/observablemap";
 import {NextMotionButton} from "../ui/moleculas/NextMotionButton";
 import {CardSelectionPanel} from "../ui/orgnisms/CardSelectionPanel";
+import {Navigate} from "react-router-dom";
 
 const BottomDiv = styled.div`
     display: flex;
@@ -35,7 +36,7 @@ const GameView = view(GameViewModel)(({viewModel}) => {
     if (isLoaded) {
         players.length = 0
         motionPlayerIndex = viewModel.gameEntity!.motionPlayerIndex
-        for (let i = 0; i < viewModel.gameIdEntity!.players.length; ++i) {
+        for (let i = 0; i < viewModel.gameEntity!.players.length; ++i) {
             let playerNickname = viewModel.gameIdEntity!.players[i].nickname
             let playerHealth = viewModel.gameEntity!.players[i].health
             let playerRole = viewModel.gameEntity!.players[i].role
@@ -74,14 +75,19 @@ const GameView = view(GameViewModel)(({viewModel}) => {
     let dragProps = {onCardDragStart: onCardDragStart, onPanelDrop: onPanelDrop}
     let isDoingMotion = viewModel.gameIdEntity?.players[motionPlayerIndex].nickname === viewModel.getNickname()
     let needToSelect = isLoaded && isDoingMotion && viewModel.gameEntity!.cardsForSelection.length != 0
-
-    console.log(needToSelect)
-
-    if (viewModel.isDead){
-        return <h1>You are dead</h1>
+    
+    if (viewModel.isEnded){
+        return <Navigate to={'/match-end'}/>
     }
+    
 
     return <div>
+        {viewModel.isDead &&
+            <CenterDiv>
+                <h1>You are dead</h1>
+            </CenterDiv>
+        }
+
         {
             !needToSelect &&
             <CenterDiv>
