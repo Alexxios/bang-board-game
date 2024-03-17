@@ -11,5 +11,6 @@ export interface Player{
     buffs: PlayerBuffs,
     shootingDistance: number,
     cards: PlayingCard[],
+    isDead: boolean,
     character: Character
 }

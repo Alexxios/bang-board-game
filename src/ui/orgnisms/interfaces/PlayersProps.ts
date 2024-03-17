@@ -9,5 +9,6 @@ export interface PlayerProps{
     weapon: PlayingCard,
     cards: PlayingCard[],
     character: Character,
+    isDead: boolean,
     isDoingMotion: boolean,
 }
