@@ -16,15 +16,36 @@ const BottomDiv = styled.div`
     display: flex;
     position: absolute;
     bottom: 0;
-    margin-bottom: 50px;
+    margin-bottom: 2%;
     vertical-align: middle;
 `
 
 const TopDiv = styled.div`
     display: flex;
+    flex-direction: row;
     position: absolute;
-    top: 0;
-    margin-top: 50px;
+    margin-top: 1%;
+    left: 50%;
+    transform: translateX(-50%);
+`
+
+const LeftDiv = styled.div`
+    display: flex;
+    flex-direction: column-reverse;
+    align-items: center;
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+`
+const RightDiv = styled.div`
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
 `
 
 const GameView = view(GameViewModel)(({viewModel}) => {
@@ -32,6 +53,7 @@ const GameView = view(GameViewModel)(({viewModel}) => {
     const [selectedCardIndex, setSelectedCard] = useState(0)
 
     let motionPlayerIndex = 0
+    let currentPlayerIndex = 0
     let isLoaded = viewModel.gameEntity && viewModel.gameIdEntity
     if (isLoaded) {
         players.length = 0
@@ -45,6 +67,10 @@ const GameView = view(GameViewModel)(({viewModel}) => {
             let playerCards = viewModel.gameEntity!.players[i].cards
             let playerCharacter = viewModel.gameEntity!.players[i].character
 
+
+            if (playerNickname == viewModel.getNickname()) 
+                currentPlayerIndex = players.length
+
             players.push({
                 nickname: playerNickname,
                 health: playerHealth,
@@ -54,8 +80,10 @@ const GameView = view(GameViewModel)(({viewModel}) => {
                 character: playerCharacter,
                 isDoingMotion: playerMotion
             })
+
         }
     }
+    let step = 360 / players.length
 
     const onCardDragStart = (cardIndex: number) => {
         setSelectedCard(cardIndex)
@@ -92,14 +120,42 @@ const GameView = view(GameViewModel)(({viewModel}) => {
             !needToSelect &&
             <CenterDiv>
                 <TopDiv>
-                    {players.map(playerProps => {
-                        if (playerProps.nickname !== viewModel.getNickname()) {
+                    {players.map((playerProps, index) => {
+                        let angle = ((index - currentPlayerIndex) * step + 360) % 360
+                        if (120 < angle && angle < 240) {
                             return <EnemyPlayerGameTablet props={playerProps} onDrop={onPanelDrop}/>
                         }
+
                     })}
                 </TopDiv>
             </CenterDiv>
         }
+
+        {
+            !needToSelect &&
+            <LeftDiv>
+                {players.map((playerProps, index) => {
+                    let angle = ((index - currentPlayerIndex) * step + 360) % 360
+                    if (0 < angle && angle <= 120) {
+                        return <EnemyPlayerGameTablet props={playerProps} onDrop={onPanelDrop}/>
+                    }
+                })}
+            </LeftDiv>
+        }
+
+        {
+            !needToSelect &&
+            <RightDiv>
+                {players.map((playerProps, index) => {
+                    let angle = ((index - currentPlayerIndex) * step + 360) % 360
+                    if (240 <= angle && angle < 360) {
+                        return <EnemyPlayerGameTablet props={playerProps} onDrop={onPanelDrop}/>
+                    }
+
+                })}
+            </RightDiv>
+        }
+
 
         {
             needToSelect &&
@@ -115,7 +171,6 @@ const GameView = view(GameViewModel)(({viewModel}) => {
 
         <CenterDiv>
             <BottomDiv>
-
                 {players.map(playerProps => {
                     if (playerProps.nickname === viewModel.getNickname()) {
                         return <CurrentPlayerGameTablet props={playerProps} dragProps={dragProps}/>

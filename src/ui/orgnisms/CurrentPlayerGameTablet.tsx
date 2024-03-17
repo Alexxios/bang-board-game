@@ -6,12 +6,13 @@ import {DragProps} from "./interfaces/DragProps";
 import {CenterDiv} from "../../views/HomeView";
 import {WeaponCard} from "../moleculas/WeaponCard";
 import {CharacterCard} from "../moleculas/CharacterCard";
+import BulletImage from "../../assets/bullet.png";
 
 export const CurrentPlayerGameTablet = ({props, dragProps}: { props: PlayerProps, dragProps: DragProps }) => {
 
     let healthImages = []
     for (let i = 0; i < props.health; ++i){
-        healthImages.push(<p>*</p>)
+        healthImages.push(<img src={BulletImage} width={25} style={{marginLeft:-7, marginRight:-7}}/>)
     }
 
     return <Panel>
