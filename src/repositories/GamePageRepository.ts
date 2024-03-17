@@ -11,13 +11,13 @@ import {GameEvent} from "../models/GameEvent";
 
 @singleton()
 export class GamePageRepository {
-    private stompClient: CompatClient;
+    private stompClient: CompatClient
 
     constructor(private api: GamePageAPI, gameId: string, nickname: string, gameEvents: GameEventsHolder) {
-        makeObservable(this);
+        makeObservable(this)
 
 
-        this.stompClient = Stomp.over(SockJS("http://localhost:8090/bang"));
+        this.stompClient = Stomp.over(SockJS("http://localhost:8090/bang"))
 
         this.stompClient.connect({},
             () => {
@@ -25,58 +25,58 @@ export class GamePageRepository {
                 this.stompClient.subscribe(
                     "/games/" + gameId + "/next-motion",
                     (message) => {
-                        gameEvents.onNextMotion(message);
+                        gameEvents.onNextMotion(message)
                     }
-                );
+                )
 
                 this.stompClient.subscribe(
                     "/games/" + gameId + "/keep-card",
                     (message) => {
-                        gameEvents.onKeepCard(message);
+                        gameEvents.onKeepCard(message)
                     }
-                );
+                )
 
                 this.stompClient.subscribe(
                     "/games/" + gameId + "/card-play",
                     (message) => {
-                        gameEvents.onCardPlay(message);
+                        gameEvents.onCardPlay(message)
                     }
-                );
+                )
 
                 this.stompClient.subscribe(
                     "/games/" + gameId + "/player-death",
                     (message) => {
-                        gameEvents.onPlayerDeath(message);
+                        gameEvents.onPlayerDeath(message)
                     }
-                );
+                )
 
                 this.stompClient.subscribe(
                     "/games/" + gameId + "/match-end",
                     (message) => {
-                        gameEvents.onMatchEnd(message);
+                        gameEvents.onMatchEnd(message)
                     }
-                );
-            });
+                )
+            })
     }
 
     getGame = (gameId: string) => {
-        return this.api.getGame(gameId);
+        return this.api.getGame(gameId)
     }
 
     getGameId = (gameId: string) => {
-        return this.api.getGameId(gameId);
+        return this.api.getGameId(gameId)
     }
 
     initGame = async (gameId: string) => {
-        await this.api.initGame(gameId);
+        await this.api.initGame(gameId)
     }
 
     nextMotion = (gameId: string) => {
-        this.api.nextMotion(gameId);
+        this.api.nextMotion(gameId)
     }
 
     sendEvent = async (gameId: string, event: GameEvent) => {
-        await this.api.sendEvent(gameId, event);
+        await this.api.sendEvent(gameId, event)
     }
 
 }

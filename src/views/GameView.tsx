@@ -6,21 +6,37 @@ import {PlayerProps} from "../ui/orgnisms/interfaces/PlayersProps";
 import {EnemyPlayerGameTablet} from "../ui/orgnisms/EnemyPlayerGameTablet";
 import {CenterDiv} from "./HomeView";
 import {GameEvent} from "../models/GameEvent";
+import styled from "styled-components";
+import {DELETE} from "mobx/dist/types/observablemap";
+import {NextMotionButton} from "../ui/moleculas/NextMotionButton";
+import {CardSelectionPanel} from "../ui/orgnisms/CardSelectionPanel";
+import {Navigate} from "react-router-dom";
 
+const BottomDiv = styled.div`
+    display: flex;
+    position: absolute;
+    bottom: 0;
+    margin-bottom: 50px;
+    vertical-align: middle;
+`
+
+const TopDiv = styled.div`
+    display: flex;
+    position: absolute;
+    top: 0;
+    margin-top: 50px;
+`
 
 const GameView = view(GameViewModel)(({viewModel}) => {
     const [players, setPlayers] = useState<PlayerProps[]>([])
     const [selectedCardIndex, setSelectedCard] = useState(0)
-    if ( viewModel.gameEntity){
-        console.log("rerender " + viewModel.gameEntity?.players[0].cards.length.toString())
-    }
 
     let motionPlayerIndex = 0
     let isLoaded = viewModel.gameEntity && viewModel.gameIdEntity
-    if (isLoaded){
+    if (isLoaded) {
         players.length = 0
         motionPlayerIndex = viewModel.gameEntity!.motionPlayerIndex
-        for (let i = 0; i < viewModel.gameIdEntity!.players.length; ++i){
+        for (let i = 0; i < viewModel.gameEntity!.players.length; ++i) {
             let playerNickname = viewModel.gameIdEntity!.players[i].nickname
             let playerHealth = viewModel.gameEntity!.players[i].health
             let playerRole = viewModel.gameEntity!.players[i].role
@@ -56,21 +72,62 @@ const GameView = view(GameViewModel)(({viewModel}) => {
         viewModel.sendEvent(event)
     }
 
-    let dragProps = {onCardDragStart: onCardDragStart, onPanelDrop: onPanelDrop }
+    let dragProps = {onCardDragStart: onCardDragStart, onPanelDrop: onPanelDrop}
+    let isDoingMotion = viewModel.gameIdEntity?.players[motionPlayerIndex].nickname === viewModel.getNickname()
+    let needToSelect = isLoaded && isDoingMotion && viewModel.gameEntity!.cardsForSelection.length != 0
+    
+    if (viewModel.isEnded){
+        return <Navigate to={'/match-end'}/>
+    }
+    
 
     return <div>
-        <CenterDiv>
-        {players.map(playerProps => {
-                if (playerProps.nickname === viewModel.getNickname()) {
-                    return <CurrentPlayerGameTablet props={playerProps} dragProps={dragProps}/>
-                } else {
-                    return <EnemyPlayerGameTablet props={playerProps} onDrop={onPanelDrop} />
-                }
-            })
+        {viewModel.isDead &&
+            <CenterDiv>
+                <h1>You are dead</h1>
+            </CenterDiv>
         }
-    </CenterDiv>
-        {isLoaded && viewModel.gameIdEntity?.players[motionPlayerIndex].nickname === viewModel.getNickname() &&
-            <button onClick={() => {viewModel.nextMotion()}}>Следующий ход</button>}
+
+        {
+            !needToSelect &&
+            <CenterDiv>
+                <TopDiv>
+                    {players.map(playerProps => {
+                        if (playerProps.nickname !== viewModel.getNickname()) {
+                            return <EnemyPlayerGameTablet props={playerProps} onDrop={onPanelDrop}/>
+                        }
+                    })}
+                </TopDiv>
+            </CenterDiv>
+        }
+
+        {
+            needToSelect &&
+            <CardSelectionPanel cards={viewModel.gameEntity!.cardsForSelection} onSelect={viewModel.onSelectCard}/>
+        }
+
+        <BottomDiv>
+            <div style={{marginLeft: 400}}>
+                {isLoaded && isDoingMotion &&
+                    <NextMotionButton onClick={viewModel.nextMotion}/>}
+            </div>
+        </BottomDiv>
+
+        <CenterDiv>
+            <BottomDiv>
+
+                {players.map(playerProps => {
+                    if (playerProps.nickname === viewModel.getNickname()) {
+                        return <CurrentPlayerGameTablet props={playerProps} dragProps={dragProps}/>
+                    }
+                })
+                }
+            </BottomDiv>
+
+        </CenterDiv>
+
+
+
     </div>
 })
 

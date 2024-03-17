@@ -1,6 +1,6 @@
 export enum Role {
-    Sheriff,
-    Assistant,
-    Bandit,
-    Renegat
+    Sheriff = 'Sheriff',
+    Assistant = 'Assistant',
+    Bandit = 'Bandit',
+    Renegat = 'Renegat'
 }

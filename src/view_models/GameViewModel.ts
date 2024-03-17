@@ -7,17 +7,23 @@ import {GameEventsHolder} from "../models/GameEventsHolder";
 import {IMessage} from "@stomp/stompjs";
 import {GameEntity} from "../models/GameEntity";
 import {MotionResponse} from "../models/MotionResponse";
-import {PlayingCard} from "../enums/PlayingCards";
 import {CardReceive} from "../models/CardReceive";
 import {GameEvent} from "../models/GameEvent";
 import {OnCardPlay} from "../models/OnCardPlay";
+import {PlayingCard} from "../models/PlayingCard";
+import PlayerDeath from "../models/PlayerDeath";
+import {MatchEnd} from "../models/MatchEnd";
 
 class GameViewModel extends ViewModel {
     private gameId = ''
     private nickname = ''
+    private matchEndInfo: MatchEnd | undefined
+
     @observable gameEntity: undefined | GameEntity
     @observable gameIdEntity: undefined | GameId
     @observable cards: PlayingCard[] = []
+    @observable isDead: boolean = false
+    @observable isEnded: boolean = false
 
     constructor(private app: GamePageRepository) {
         super()
@@ -36,6 +42,10 @@ class GameViewModel extends ViewModel {
         return this.nickname
     }
 
+    public getMathEndInfo = () => {
+        return this.matchEndInfo
+    }
+
     public nextMotion = () => {
         this.app.nextMotion(this.gameId)
     }
@@ -52,11 +62,26 @@ class GameViewModel extends ViewModel {
         }
     }
 
+    public getPlayerNicknameByIndex = (index: number) => {
+        return this.gameIdEntity!.players[index].nickname
+    }
+
     public getCardByIndex = (cardIndex: number) => {
         let playerIndex = this.getPlayerIndexByNickname(this.nickname)!;
         return this.gameEntity!.players[playerIndex].cards[cardIndex];
     }
 
+    public onSelectCard = (index: number) => {
+        let event: GameEvent = {
+            senderIndex: this.getPlayerIndexByNickname(this.nickname)!,
+            getterIndex: this.getPlayerIndexByNickname(this.nickname)!,
+            cardDescription: {
+                card: this.gameEntity!.cardsForSelection[index]
+            },
+            cardIndex: index
+        }
+        this.sendEvent(event)
+    }
 
 
     private onMotion = async (message: IMessage) => {
@@ -65,12 +90,13 @@ class GameViewModel extends ViewModel {
     }
 
     private onKeepCard = async (message: IMessage) => {
-        let cardReceive: CardReceive = JSON.parse(message.body);
         await this.updateGameInfo()
     }
 
     private onMatchEnd = (message: IMessage) => {
-
+        let player = this.gameEntity!.players[0]
+        localStorage.setItem('winnerRole', player.role)
+        this.isEnded = true
     }
 
     private onCardPlay = async (message: IMessage) => {
@@ -80,21 +106,26 @@ class GameViewModel extends ViewModel {
     }
 
     private onPlayerDeath = (message: IMessage) => {
+        let playerDeath: PlayerDeath = JSON.parse(message.body)
 
+        let nickname = this.getPlayerNicknameByIndex(playerDeath.playerIndex)
+        if (nickname == this.nickname){
+            this.isDead = true
+        } else {
+            this.gameEntity!.players.splice(playerDeath.playerIndex, 1)
+        }
     }
 
     private updateGameInfo = async () => {
         await this.app.getGame(this.gameId).then(
             result => {
                 this.gameEntity = result.data
-                console.log('response ' + typeof this.gameEntity)
             }
         )
 
         await this.app.getGameId(this.gameId).then(
             result => {
                 this.gameIdEntity = result.data
-                console.log('response id ' + typeof this.gameIdEntity)
             }
         )
     }

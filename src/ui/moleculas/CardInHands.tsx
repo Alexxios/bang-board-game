@@ -1,16 +1,18 @@
-import {PlayingCard} from "../../enums/PlayingCards";
-import React, {DragEventHandler} from "react";
+import React from "react";
 import styled from "styled-components";
+import {PlayingCard} from "../../models/PlayingCard";
 
 export const CardDiv = styled.div`
     border: solid 1px black;
     border-radius: 5px;
     padding: 5px;
+    text-align: center;
+    vertical-align: middle;
 `
 
-export const CardInHands = ({isDraggable, cardType, onDragStart, index}: {
+export const CardInHands = ({isDraggable, card, onDragStart, index}: {
     isDraggable: boolean,
-    cardType: PlayingCard,
+    card: PlayingCard,
     onDragStart: Function,
     index: number
 }) => {
@@ -18,6 +20,6 @@ export const CardInHands = ({isDraggable, cardType, onDragStart, index}: {
                     onDragStart={(e) => {
                         onDragStart(index);
                     }}>
-        <h3>{cardType}</h3>
+        <h3>{card.cardName}</h3>
     </CardDiv>
 }

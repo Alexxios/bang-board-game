@@ -39,7 +39,7 @@ export const CurrentPlayerGameTablet = ({props, dragProps}: { props: PlayerProps
 
             <CenterDiv>
                 {props.cards.map((card, index) => {
-                    return <CardInHands isDraggable={props.isDoingMotion} cardType={card} onDragStart={dragProps.onCardDragStart}
+                    return <CardInHands isDraggable={props.isDoingMotion} card={card} onDragStart={dragProps.onCardDragStart}
                                         index={index}/>
                 })}
             </CenterDiv>
