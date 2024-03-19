@@ -7,12 +7,21 @@ import {GameEventsHolder} from "../models/GameEventsHolder";
 import {IMessage} from "@stomp/stompjs";
 import {GameEntity} from "../models/GameEntity";
 import {MotionResponse} from "../models/MotionResponse";
-import {CardReceive} from "../models/CardReceive";
 import {GameEvent} from "../models/GameEvent";
 import {OnCardPlay} from "../models/OnCardPlay";
 import {PlayingCard} from "../models/PlayingCard";
 import PlayerDeath from "../models/PlayerDeath";
 import {MatchEnd} from "../models/MatchEnd";
+
+export class DescriptionShowingProps {
+    constructor(needToShow: boolean, card: PlayingCard){
+        this.needToShow = needToShow
+        this.card = card
+    }
+
+    needToShow: boolean
+    card: PlayingCard
+}
 
 class GameViewModel extends ViewModel {
     private gameId = ''
@@ -24,6 +33,7 @@ class GameViewModel extends ViewModel {
     @observable cards: PlayingCard[] = []
     @observable isDead: boolean = false
     @observable isEnded: boolean = false
+    @observable descriptionCardShowing: DescriptionShowingProps | undefined
 
     constructor(private app: GamePageRepository) {
         super()
@@ -83,6 +93,13 @@ class GameViewModel extends ViewModel {
         this.sendEvent(event)
     }
 
+    public showCardDescription = (card: PlayingCard) => {
+        this.descriptionCardShowing = new DescriptionShowingProps(true, card)
+    }
+
+    public closeCardDescription = () => {
+        this.descriptionCardShowing = undefined
+    }
 
     private onMotion = async (message: IMessage) => {
         let motionPlayer: MotionResponse = JSON.parse(message.body)

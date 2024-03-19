@@ -11,6 +11,7 @@ import {DELETE} from "mobx/dist/types/observablemap";
 import {NextMotionButton} from "../ui/moleculas/NextMotionButton";
 import {CardSelectionPanel} from "../ui/orgnisms/CardSelectionPanel";
 import {Navigate} from "react-router-dom";
+import { CardDescription } from '../ui/moleculas/CardDescription';
 
 const BottomDiv = styled.div`
     display: flex;
@@ -112,6 +113,11 @@ const GameView = view(GameViewModel)(({viewModel}) => {
     
 
     return <div>
+        {
+            viewModel.descriptionCardShowing?.needToShow && 
+            <CardDescription card={viewModel.descriptionCardShowing.card} onClick={viewModel.closeCardDescription}/>
+        }
+
         {viewModel.isDead &&
             <CenterDiv>
                 <h1>You are dead</h1>
@@ -174,7 +180,7 @@ const GameView = view(GameViewModel)(({viewModel}) => {
             <BottomDiv>
                 {players.map(playerProps => {
                     if (playerProps.nickname === viewModel.getNickname()) {
-                        return <CurrentPlayerGameTablet props={playerProps} dragProps={dragProps}/>
+                        return <CurrentPlayerGameTablet props={playerProps} dragProps={dragProps} onCardClick={viewModel.showCardDescription}/>
                     }
                 })
                 }
