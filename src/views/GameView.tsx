@@ -11,7 +11,8 @@ import {DELETE} from "mobx/dist/types/observablemap";
 import {NextMotionButton} from "../ui/moleculas/NextMotionButton";
 import {CardSelectionPanel} from "../ui/orgnisms/CardSelectionPanel";
 import {Navigate} from "react-router-dom";
-import { CardDescription } from '../ui/moleculas/CardDescription';
+import {CardDescription} from '../ui/moleculas/CardDescription';
+import {CharacterDescription} from "../ui/moleculas/CharacterDescription";
 
 const BottomDiv = styled.div`
     display: flex;
@@ -70,7 +71,7 @@ const GameView = view(GameViewModel)(({viewModel}) => {
             let isDead = viewModel.gameEntity!.players[i].isDead
 
 
-            if (playerNickname == viewModel.getNickname()) 
+            if (playerNickname == viewModel.getNickname())
                 currentPlayerIndex = players.length
 
             players.push({
@@ -106,16 +107,22 @@ const GameView = view(GameViewModel)(({viewModel}) => {
     let dragProps = {onCardDragStart: onCardDragStart, onPanelDrop: onPanelDrop}
     let isDoingMotion = viewModel.gameIdEntity?.players[motionPlayerIndex].nickname === viewModel.getNickname()
     let needToSelect = isLoaded && isDoingMotion && viewModel.gameEntity!.cardsForSelection.length != 0
-    
-    if (viewModel.isEnded){
+
+    if (viewModel.isEnded) {
         return <Navigate to={'/match-end'}/>
     }
-    
+
 
     return <div>
         {
-            viewModel.descriptionCardShowing?.needToShow && 
-            <CardDescription card={viewModel.descriptionCardShowing.card} onClick={viewModel.closeCardDescription}/>
+            viewModel.cardDescriptionShowing?.needToShow &&
+            <CardDescription card={viewModel.cardDescriptionShowing.card} onClick={viewModel.closeCardDescription}/>
+        }
+
+        {
+            viewModel.characterDescriptionShowing?.needToShow &&
+            <CharacterDescription character={viewModel.characterDescriptionShowing.character}
+                                  onClick={viewModel.closeCharacterDescription}/>
         }
 
         {viewModel.isDead &&
@@ -131,7 +138,8 @@ const GameView = view(GameViewModel)(({viewModel}) => {
                     {players.map((playerProps, index) => {
                         let angle = ((index - currentPlayerIndex) * step + 360) % 360;
                         if (120 < angle && angle < 240) {
-                            return <EnemyPlayerGameTablet props={playerProps} onDrop={onPanelDrop}/>;
+                            return <EnemyPlayerGameTablet props={playerProps} onDrop={onPanelDrop}
+                                                          onCharacterClick={viewModel.showCharacterDescription}/>;
                         }
                     })}
                 </TopDiv>
@@ -144,7 +152,8 @@ const GameView = view(GameViewModel)(({viewModel}) => {
                 {players.map((playerProps, index) => {
                     let angle = ((index - currentPlayerIndex) * step + 360) % 360
                     if (0 < angle && angle <= 120) {
-                        return <EnemyPlayerGameTablet props={playerProps} onDrop={onPanelDrop}/>
+                        return <EnemyPlayerGameTablet props={playerProps} onDrop={onPanelDrop}
+                                                      onCharacterClick={viewModel.showCharacterDescription}/>
                     }
                 })}
             </LeftDiv>
@@ -156,7 +165,8 @@ const GameView = view(GameViewModel)(({viewModel}) => {
                 {players.map((playerProps, index) => {
                     let angle = ((index - currentPlayerIndex) * step + 360) % 360
                     if (240 <= angle && angle < 360) {
-                        return <EnemyPlayerGameTablet props={playerProps} onDrop={onPanelDrop}/>
+                        return <EnemyPlayerGameTablet props={playerProps} onDrop={onPanelDrop}
+                                                      onCharacterClick={viewModel.showCharacterDescription}/>
                     }
 
                 })}
@@ -180,14 +190,15 @@ const GameView = view(GameViewModel)(({viewModel}) => {
             <BottomDiv>
                 {players.map(playerProps => {
                     if (playerProps.nickname === viewModel.getNickname()) {
-                        return <CurrentPlayerGameTablet props={playerProps} dragProps={dragProps} onCardClick={viewModel.showCardDescription}/>
+                        return <CurrentPlayerGameTablet props={playerProps} dragProps={dragProps}
+                                                        onCardClick={viewModel.showCardDescription}
+                                                        onCharacterClick={viewModel.showCharacterDescription}/>
                     }
                 })
                 }
             </BottomDiv>
 
         </CenterDiv>
-
 
 
     </div>

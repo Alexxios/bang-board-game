@@ -8,7 +8,8 @@ import {WeaponCard} from "../moleculas/WeaponCard";
 import {CharacterCard} from "../moleculas/CharacterCard";
 import BulletImage from "../../assets/bullet.png";
 
-export const CurrentPlayerGameTablet = ({props, dragProps, onCardClick}: { props: PlayerProps, dragProps: DragProps, onCardClick: Function }) => {
+export const CurrentPlayerGameTablet = ({props, dragProps, onCardClick, onCharacterClick}: {
+    props: PlayerProps, dragProps: DragProps, onCardClick: Function, onCharacterClick: Function}) => {
 
     let healthImages = []
     for (let i = 0; i < props.health; ++i){
@@ -34,7 +35,7 @@ export const CurrentPlayerGameTablet = ({props, dragProps, onCardClick}: { props
         <CenterDiv>
             <div style={{marginRight: 50}}>
                 <WeaponCard card={props.weapon} canDropOn={true} onDrop={() => { dragProps.onPanelDrop(props.nickname)}}/>
-                <CharacterCard character={props.character}/>
+                <CharacterCard character={props.character} onClick={onCharacterClick}/>
             </div>
 
 

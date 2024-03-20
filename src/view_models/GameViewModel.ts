@@ -12,8 +12,10 @@ import {OnCardPlay} from "../models/OnCardPlay";
 import {PlayingCard} from "../models/PlayingCard";
 import PlayerDeath from "../models/PlayerDeath";
 import {MatchEnd} from "../models/MatchEnd";
+import {CharacterDescriptionMapper} from "../descriptions/CharacterDescriptionMapper";
+import {Character} from "../enums/Character";
 
-export class DescriptionShowingProps {
+export class CardDescriptionShowingProps {
     constructor(needToShow: boolean, card: PlayingCard){
         this.needToShow = needToShow
         this.card = card
@@ -22,6 +24,17 @@ export class DescriptionShowingProps {
     needToShow: boolean
     card: PlayingCard
 }
+
+export class CharacterDescriptionShowingProps {
+    constructor(needToShow: boolean, character: Character){
+        this.needToShow = needToShow
+        this.character = character
+    }
+
+    needToShow: boolean
+    character: Character
+}
+
 
 class GameViewModel extends ViewModel {
     private gameId = ''
@@ -33,7 +46,8 @@ class GameViewModel extends ViewModel {
     @observable cards: PlayingCard[] = []
     @observable isDead: boolean = false
     @observable isEnded: boolean = false
-    @observable descriptionCardShowing: DescriptionShowingProps | undefined
+    @observable cardDescriptionShowing: CardDescriptionShowingProps | undefined
+    @observable characterDescriptionShowing: CharacterDescriptionShowingProps | undefined
 
     constructor(private app: GamePageRepository) {
         super()
@@ -94,11 +108,19 @@ class GameViewModel extends ViewModel {
     }
 
     public showCardDescription = (card: PlayingCard) => {
-        this.descriptionCardShowing = new DescriptionShowingProps(true, card)
+        this.cardDescriptionShowing = new CardDescriptionShowingProps(true, card)
     }
 
     public closeCardDescription = () => {
-        this.descriptionCardShowing = undefined
+        this.cardDescriptionShowing = undefined
+    }
+
+    public showCharacterDescription = (character: Character) => {
+        this.characterDescriptionShowing = new CharacterDescriptionShowingProps(true, character)
+    }
+
+    public closeCharacterDescription = () => {
+        this.characterDescriptionShowing = undefined
     }
 
     private onMotion = async (message: IMessage) => {

@@ -64,12 +64,25 @@ export class CharacterDescriptionMapper {
     private willyTheKid = 'В свой ход может сыграть сколько угодно карт «Бэнг!».'
 
     descriptions: Map<Character, string> = new Map([
-
+        [Character.Jourdonnais, this.jourdonnais],
+        [Character.BlackJack, this.blackJack],
+        [Character.BartCassidy, this.bartCassidy],
+        [Character.ElGringo, this.elGringo],
+        [Character.JesseJones, this.jesseJones],
+        [Character.CalamityJanet, this.calamityJanet],
+        [Character.KitCarlson, this.kitCarlson],
+        [Character.LuckyDuke, this.luckyDuke],
+        [Character.PaulRegrez, this.paulRegret],
+        [Character.PedroRemirez, this.pedroRamirez],
+        [Character.RoseDoolan, this.roseDoolan],
+        [Character.SidKetchum, this.sidKetchum],
+        [Character.SuzyLafayette, this.suzyLafayette],
+        [Character.SlabTheKiller, this.slabTheKiller],
+        [Character.VultureSam, this.vultureSam],
+        [Character.WillyTheKid, this.willyTheKid],
     ])
 
     public getDescription = (character: Character) => {
         return this.descriptions.get(character)
     }
-
-
 }

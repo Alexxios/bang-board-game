@@ -8,8 +8,8 @@ export const CardDiv = styled.div`
     padding: 5px;
 `
 
-export const CharacterCard = ({character} : {character: Character}) => {
-    return <CardDiv>
+export const CharacterCard = ({character, onClick} : {character: Character, onClick: Function}) => {
+    return <CardDiv onClick={() => {onClick(character)}}>
         <h3>{character}</h3>
     </CardDiv>
 }
