@@ -2,7 +2,7 @@ import React from 'react'
 import { PlayingCard } from '../../models/PlayingCard'
 import styled from 'styled-components'
 import { CenterDiv } from '../../views/HomeView'
-import { CardDescriptionMapper } from '../../cardsDescription/CardDescriptionMapper'
+import { CardDescriptionMapper } from '../../descriptions/CardDescriptionMapper'
 import { Panel } from '../orgnisms/styles/PanelDiv'
 
 const Overlay = styled.div`
