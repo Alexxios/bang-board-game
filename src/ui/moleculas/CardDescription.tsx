@@ -8,7 +8,10 @@ import { Panel } from '../orgnisms/styles/PanelDiv'
 const Overlay = styled.div`
     overlay: auto;
     position: absolute;
-    z-index: 2
+    width: 100%;
+    height: 100%;
+    top: 20%;
+    z-index: 2;
 `
 
 export const CardDescription = ({card, onClick} : {card: PlayingCard, onClick: Function}) => {
@@ -18,12 +21,19 @@ export const CardDescription = ({card, onClick} : {card: PlayingCard, onClick: F
 
     return <Overlay> 
         <CenterDiv>
-            <Panel style={{background: 'white'}}>
+            <Panel style={{background: 'white', maxWidth: 250}}>
                 <div>
-                    <h1>{card.cardName}</h1>
-                    <h1>{card.suit}</h1>
-                    <h1>{card.number}</h1>
-                    <h1>{description}</h1>
+                    <CenterDiv>
+                        <h1>{card.cardName}</h1>
+                    </CenterDiv>
+                    <CenterDiv>
+                        <h1>{card.suit}</h1>
+                        <h1 style={{marginLeft: 10}}>{card.number}</h1>
+                    </CenterDiv>
+                    <div style={{textAlign: 'justify'}}>
+                        {description!.split('\n').map(part => <p>{part}</p>)}
+                    </div>
+
                 </div>
                 <button onClick={() => {onClick()}}>Закрыть</button>
             </Panel>
