@@ -22,9 +22,12 @@ export const CharacterDescription = ({character, onClick} : {character: Characte
 
     return <Overlay> 
         <CenterDiv>
-            <Panel style={{background: 'white', maxWidth: 250}}>
-                <h1>{character}</h1>
-                <div style={{textAlign: 'justify'}}>
+            <Panel style={{background: 'white', maxWidth: 250, minHeight: 400}}>
+                <CenterDiv>
+                    <h1>{character}</h1>
+                </CenterDiv>
+
+                <div style={{textAlign: 'justify', marginTop: 200}}>
                     {description!.split('\n').map(part => <p>{part}</p>)}
                 </div>
                 <button onClick={() => {

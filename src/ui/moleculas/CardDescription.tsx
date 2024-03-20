@@ -21,7 +21,7 @@ export const CardDescription = ({card, onClick} : {card: PlayingCard, onClick: F
 
     return <Overlay> 
         <CenterDiv>
-            <Panel style={{background: 'white', maxWidth: 250}}>
+            <Panel style={{background: 'white', maxWidth: 250, minHeight: 450}}>
                 <div>
                     <CenterDiv>
                         <h1>{card.cardName}</h1>
@@ -30,7 +30,7 @@ export const CardDescription = ({card, onClick} : {card: PlayingCard, onClick: F
                         <h1>{card.suit}</h1>
                         <h1 style={{marginLeft: 10}}>{card.number}</h1>
                     </CenterDiv>
-                    <div style={{textAlign: 'justify'}}>
+                    <div style={{textAlign: 'justify', marginTop: 150}}>
                         {description!.split('\n').map(part => <p>{part}</p>)}
                     </div>
 
