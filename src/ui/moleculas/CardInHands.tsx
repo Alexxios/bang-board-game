@@ -10,16 +10,18 @@ export const CardDiv = styled.div`
     vertical-align: middle;
 `
 
-export const CardInHands = ({isDraggable, card, onDragStart, index}: {
+export const CardInHands = ({isDraggable, card, onDragStart, index, onClick}: {
     isDraggable: boolean,
     card: PlayingCard,
     onDragStart: Function,
-    index: number
+    index: number,
+    onClick: Function
 }) => {
     return <CardDiv draggable={isDraggable}
                     onDragStart={(e) => {
                         onDragStart(index);
-                    }}>
+                    }}
+                    onClick={() => {onClick(card)}}>
         <h3>{card.cardName}</h3>
     </CardDiv>
 }

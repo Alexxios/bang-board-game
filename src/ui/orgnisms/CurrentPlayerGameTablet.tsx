@@ -8,7 +8,7 @@ import {WeaponCard} from "../moleculas/WeaponCard";
 import {CharacterCard} from "../moleculas/CharacterCard";
 import BulletImage from "../../assets/bullet.png";
 
-export const CurrentPlayerGameTablet = ({props, dragProps}: { props: PlayerProps, dragProps: DragProps }) => {
+export const CurrentPlayerGameTablet = ({props, dragProps, onCardClick}: { props: PlayerProps, dragProps: DragProps, onCardClick: Function }) => {
 
     let healthImages = []
     for (let i = 0; i < props.health; ++i){
@@ -41,7 +41,7 @@ export const CurrentPlayerGameTablet = ({props, dragProps}: { props: PlayerProps
             <CenterDiv>
                 {props.cards.map((card, index) => {
                     return <CardInHands isDraggable={props.isDoingMotion} card={card} onDragStart={dragProps.onCardDragStart}
-                                        index={index}/>
+                                        index={index} onClick={onCardClick}/>
                 })}
             </CenterDiv>
 
