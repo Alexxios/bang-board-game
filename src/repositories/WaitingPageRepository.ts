@@ -5,6 +5,7 @@ import {NicknameCheckResult} from "../models/NicknameCheckResult";
 import WaitingPageAPI from "../API/WaitingPageAPI";
 import {CompatClient, Stomp} from "@stomp/stompjs";
 import SockJS from "sockjs-client";
+import {SERVER_WEB_SOCKET_ADDRESS} from "../config";
 
 interface ConnectionMessage {
     gameId: string,
@@ -19,7 +20,7 @@ export class WaitingPageRepository {
         makeObservable(this);
 
 
-        this.stompClient = Stomp.over(SockJS("http://localhost:8090/bang"));
+        this.stompClient = Stomp.over(SockJS(SERVER_WEB_SOCKET_ADDRESS));
 
         this.stompClient.connect({},
             () => {

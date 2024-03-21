@@ -8,6 +8,7 @@ import SockJS from "sockjs-client";
 import {GameEventsHolder} from "../models/GameEventsHolder";
 import {KeepCardMessage} from "../models/KeepCardMessage";
 import {GameEvent} from "../models/GameEvent";
+import {SERVER_WEB_SOCKET_ADDRESS} from "../config";
 
 @singleton()
 export class GamePageRepository {
@@ -17,7 +18,7 @@ export class GamePageRepository {
         makeObservable(this)
 
 
-        this.stompClient = Stomp.over(SockJS("http://localhost:8090/bang"))
+        this.stompClient = Stomp.over(SockJS(SERVER_WEB_SOCKET_ADDRESS))
 
         this.stompClient.connect({},
             () => {

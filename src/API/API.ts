@@ -1,9 +1,10 @@
 import {singleton} from "tsyringe";
 import axios from "axios";
+import {SERVER_ADDRESS} from "../config";
 
 @singleton()
 export class API {
     public static api = axios.create({
-        baseURL: 'http://127.0.0.1:8090'
+        baseURL: SERVER_ADDRESS
     })
 }

@@ -70,7 +70,7 @@ class GameViewModel extends ViewModel {
         return this.matchEndInfo
     }
 
-    public nextMotion = () => {
+    public nextMotion = async () => {
         this.app.nextMotion(this.gameId)
     }
 
@@ -95,18 +95,6 @@ class GameViewModel extends ViewModel {
         return this.gameEntity!.players[playerIndex].cards[cardIndex];
     }
 
-    public onSelectCard = (index: number) => {
-        let event: GameEvent = {
-            senderIndex: this.getPlayerIndexByNickname(this.nickname)!,
-            getterIndex: this.getPlayerIndexByNickname(this.nickname)!,
-            cardDescription: {
-                card: this.gameEntity!.cardsForSelection[index]
-            },
-            cardIndex: index
-        }
-        this.sendEvent(event)
-    }
-
     public showCardDescription = (card: PlayingCard) => {
         this.cardDescriptionShowing = new CardDescriptionShowingProps(true, card)
     }
@@ -121,6 +109,18 @@ class GameViewModel extends ViewModel {
 
     public closeCharacterDescription = () => {
         this.characterDescriptionShowing = undefined
+    }
+
+    public onSelectCard = (index: number) => {
+        let event: GameEvent = {
+            senderIndex: this.getPlayerIndexByNickname(this.nickname)!,
+            getterIndex: this.getPlayerIndexByNickname(this.nickname)!,
+            cardDescription: {
+                card: this.gameEntity!.cardsForSelection[index]
+            },
+            cardIndex: index
+        }
+        this.sendEvent(event)
     }
 
     private onMotion = async (message: IMessage) => {
@@ -143,7 +143,6 @@ class GameViewModel extends ViewModel {
     private onCardPlay = async (message: IMessage) => {
         let cardPlay: OnCardPlay = JSON.parse(message.body)
         await this.updateGameInfo()
-        //this.gameEntity!.players[cardPlay.playerIndex].cards.splice(cardPlay.cardIndex, 1)
     }
 
     private onPlayerDeath = (message: IMessage) => {
