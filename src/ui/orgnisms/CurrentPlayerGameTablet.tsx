@@ -7,6 +7,8 @@ import {CenterDiv} from "../../views/HomeView";
 import {WeaponCard} from "../moleculas/WeaponCard";
 import {CharacterCard} from "../moleculas/CharacterCard";
 import BulletImage from "../../assets/bullet.png";
+import { RoleNaming } from '../../naming/RoleNaming';
+import { CharacterNaming } from '../../naming/CharacterNaming';
 
 export const CurrentPlayerGameTablet = ({props, dragProps, onCardClick, onCharacterClick}: {
     props: PlayerProps, dragProps: DragProps, onCardClick: Function, onCharacterClick: Function}) => {
@@ -15,6 +17,9 @@ export const CurrentPlayerGameTablet = ({props, dragProps, onCardClick, onCharac
     for (let i = 0; i < props.health; ++i){
         healthImages.push(<img src={BulletImage} width={25} style={{marginLeft:-7, marginRight:-7}}/>)
     }
+
+    let roleNaming = new RoleNaming()
+ 
 
     return <Panel>
         <h1 onDrop={(e) => {
@@ -25,7 +30,7 @@ export const CurrentPlayerGameTablet = ({props, dragProps, onCardClick, onCharac
             e.preventDefault();
         }}>{props.nickname}</h1>
 
-        <h2>{props.role}</h2>
+        <h2>{roleNaming.getName(props.role)}</h2>
 
         <div style={{display: "flex", justifyContent: "left"}}>
             {healthImages}

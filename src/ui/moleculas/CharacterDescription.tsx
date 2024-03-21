@@ -6,6 +6,7 @@ import { CardDescriptionMapper } from '../../descriptions/CardDescriptionMapper'
 import { Panel } from '../orgnisms/styles/PanelDiv'
 import {Character} from "../../enums/Character";
 import {CharacterDescriptionMapper} from "../../descriptions/CharacterDescriptionMapper";
+import { CharacterNaming } from '../../naming/CharacterNaming'
 
 const Overlay = styled.div`
     overlay: auto;
@@ -19,12 +20,13 @@ const Overlay = styled.div`
 export const CharacterDescription = ({character, onClick} : {character: Character, onClick: Function}) => {
     let descriptionMapper = new CharacterDescriptionMapper()
     let description = descriptionMapper.getDescription(character)
+    let characterNaming = new CharacterNaming()
 
     return <Overlay> 
         <CenterDiv>
             <Panel style={{background: 'white', maxWidth: 250, minHeight: 400}}>
                 <CenterDiv>
-                    <h1>{character}</h1>
+                    <h1>{characterNaming.getName(character)}</h1>
                 </CenterDiv>
 
                 <div style={{textAlign: 'justify', marginTop: 200}}>

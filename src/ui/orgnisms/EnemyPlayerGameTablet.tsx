@@ -5,6 +5,7 @@ import {Panel} from "./styles/PanelDiv";
 import {WeaponCard} from "../moleculas/WeaponCard";
 import {CharacterCard} from "../moleculas/CharacterCard";
 import BulletImage from "../../assets/bullet.png"
+import { RoleNaming } from '../../naming/RoleNaming';
 
 export const EnemyPlayerGameTablet = ({props, onDrop, onCharacterClick}: { props: PlayerProps, onDrop: Function, onCharacterClick: Function }) => {
 
@@ -13,10 +14,12 @@ export const EnemyPlayerGameTablet = ({props, onDrop, onCharacterClick}: { props
         healthImages.push(<img src={BulletImage} width={25} style={{marginRight:-7, marginLeft:-7}} />)
     }
 
-    let role = 'Unknown';
+    let role = 'Неизвестно';
     if (props.role == Role.Sheriff) {
-        role = 'Sheriff';
+        let roleNaming = new RoleNaming()
+        role = roleNaming.getName(Role.Sheriff)!;
     }
+    
     return <Panel style={{marginTop:10, marginBottom:10}} onDrop={() => {
         onDrop(props.nickname)
     }}

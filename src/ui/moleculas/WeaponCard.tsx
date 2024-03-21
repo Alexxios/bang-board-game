@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import {PlayingCard} from "../../models/PlayingCard";
+import { CardNaming } from "../../naming/CardNaming";
 
 export const WeaponDiv = styled.div`
     border: solid 1px black;
@@ -14,6 +15,7 @@ export const WeaponCard = ({card, canDropOn, onDrop}: {
     canDropOn: boolean,
     onDrop: Function
 }) => {
+    let cardNaming = new CardNaming()
 
     if (canDropOn) {
         return <WeaponDiv draggable={false}
@@ -24,11 +26,11 @@ export const WeaponCard = ({card, canDropOn, onDrop}: {
               onDragOver={(e) => {
                   e.preventDefault()
               }}>
-            <h3>{card.cardName}</h3>
+            <h3>{cardNaming.getName(card.cardName)}</h3>
         </WeaponDiv>
     } else {
         return <WeaponDiv draggable={false}>
-            <h3>{card.cardName}</h3>
+            <h3>{cardNaming.getName(card.cardName)}</h3>
         </WeaponDiv>
     }
 
