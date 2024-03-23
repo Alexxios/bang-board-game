@@ -1,5 +1,5 @@
 export enum PlayingCardName {
-    ClosedCard = 'BANG!',
+    ClosedCard = 'ClosedCard',
     //weapons
     Winchester = 'Winchester',
     Remington = 'Remington',

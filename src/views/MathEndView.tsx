@@ -4,6 +4,7 @@ import {view} from "@yoskutik/react-vvm";
 import MatchEndViewModel from "../view_models/MatchEndViewModel";
 import {Navigate} from "react-router-dom";
 import { RoleNaming } from '../naming/RoleNaming';
+import {Role} from "../enums/Roles";
 
 const MathEndView = view(MatchEndViewModel)(({viewModel}) => {
 
@@ -13,12 +14,19 @@ const MathEndView = view(MatchEndViewModel)(({viewModel}) => {
         return <Navigate to={'/'}/>
     }
 
-    return <>
-        <h1>Game ended</h1>
-        <h1>Winner role: {viewModel.getNickname()}</h1>
-        <h1>Winner role: {viewModel.getRole()}</h1>
-        <button onClick={() => {setGoToMainPage(true)}}>На главную</button>
-    </>
+    let roleNaming = new RoleNaming()
+
+    return <CenterDiv>
+        <div style={{display: 'block'}}>
+            <h1>Игра окончена</h1>
+            <h1>Победитель: {viewModel.getNickname()}</h1>
+            <h1>Роль: {viewModel.getRole()}</h1>
+            <button onClick={() => {
+                setGoToMainPage(true)
+            }}>На главную
+            </button>
+        </div>
+    </CenterDiv>
 })
 
 

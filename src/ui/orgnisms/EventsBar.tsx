@@ -2,6 +2,7 @@ import {Panel} from "./styles/PanelDiv";
 import {Event} from "../../enums/Event";
 import {EventType} from "../../enums/EventType";
 import {BottomDiv} from "../styles/PositionDivs";
+import {CardNaming} from "../../naming/CardNaming";
 
 const formatEvent = (event: Event) => {
     if (event.eventType == EventType.CardPlay){
@@ -9,9 +10,9 @@ const formatEvent = (event: Event) => {
         if (event.getterNickname !== event.senderNickname){
             getter = event.getterNickname
         }
-        let cardNaming = new ()
+        let cardNaming = new CardNaming()
 
-        return `Игрок ${event.senderNickname} сыграл ${event.cardName} на ${getter}`
+        return `Игрок ${event.senderNickname} сыграл ${cardNaming.getName(event.cardName!)} на ${getter}`
     }
     if (event.eventType == EventType.NextMotion){
         return `Ход передан игроку ${event.getterNickname}`

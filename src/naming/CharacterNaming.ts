@@ -19,7 +19,7 @@ export class CharacterNaming {
         [Character.SlabTheKiller, 'Слеб убийца'],
         [Character.SuzyLafayette, 'Сьюзи Лафайет'],
         [Character.VultureSam, 'Стервятник Сэм'],
-        [Character.WillyTheKid, 'Малшы Билли'],
+        [Character.WillyTheKid, 'Малыш Билли'],
     ])
 
     public getName = (character: Character) => {
