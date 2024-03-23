@@ -1,4 +1,8 @@
+import {PlayingCardName} from "../enums/PlayingCardsName";
+
 export interface OnCardPlay{
-    playerIndex: number,
+    senderIndex: number,
+    getterIndex: number,
+    cardName: PlayingCardName,
     cardIndex: number
 }

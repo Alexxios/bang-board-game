@@ -1,22 +1,22 @@
 import {ViewModel} from "@yoskutik/react-vvm";
-import {makeObservable, observable, runInAction} from "mobx";
+import {makeObservable, observable} from "mobx";
 import {GamePageRepository} from "../repositories/GamePageRepository";
 import {GameId} from "../models/GameId";
 import GamePageAPI from "../API/GamePageAPI";
 import {GameEventsHolder} from "../models/GameEventsHolder";
 import {IMessage} from "@stomp/stompjs";
 import {GameEntity} from "../models/GameEntity";
-import {MotionResponse} from "../models/MotionResponse";
 import {GameEvent} from "../models/GameEvent";
 import {OnCardPlay} from "../models/OnCardPlay";
 import {PlayingCard} from "../models/PlayingCard";
 import PlayerDeath from "../models/PlayerDeath";
 import {MatchEnd} from "../models/MatchEnd";
-import {CharacterDescriptionMapper} from "../descriptions/CharacterDescriptionMapper";
+import {Event} from "../enums/Event";
 import {Character} from "../enums/Character";
+import {EventType} from "../enums/EventType";
 
 export class CardDescriptionShowingProps {
-    constructor(needToShow: boolean, card: PlayingCard){
+    constructor(needToShow: boolean, card: PlayingCard) {
         this.needToShow = needToShow
         this.card = card
     }
@@ -26,7 +26,7 @@ export class CardDescriptionShowingProps {
 }
 
 export class CharacterDescriptionShowingProps {
-    constructor(needToShow: boolean, character: Character){
+    constructor(needToShow: boolean, character: Character) {
         this.needToShow = needToShow
         this.character = character
     }
@@ -43,6 +43,7 @@ class GameViewModel extends ViewModel {
 
     @observable gameEntity: undefined | GameEntity
     @observable gameIdEntity: undefined | GameId
+    @observable events: Event[] = []
     @observable cards: PlayingCard[] = []
     @observable isDead: boolean = false
     @observable isEnded: boolean = false
@@ -57,7 +58,9 @@ class GameViewModel extends ViewModel {
         this.app = new GamePageRepository(new GamePageAPI(), this.gameId, this.nickname, this.gameEvents)
 
         this.app.initGame(this.gameId).then(
-            () => {this.updateGameInfo()}
+            () => {
+                this.updateGameInfo()
+            }
         )
 
     }
@@ -124,8 +127,14 @@ class GameViewModel extends ViewModel {
     }
 
     private onMotion = async (message: IMessage) => {
-        let motionPlayer: MotionResponse = JSON.parse(message.body)
         await this.updateGameInfo()
+        let playerNickname = this.getPlayerNicknameByIndex(this.gameEntity!.motionPlayerIndex)
+        this.events.push({
+            eventType: EventType.NextMotion,
+            senderNickname: '',
+            getterNickname: playerNickname,
+            cardName: undefined
+        })
     }
 
     private onKeepCard = async (message: IMessage) => {
@@ -141,15 +150,24 @@ class GameViewModel extends ViewModel {
     }
 
     private onCardPlay = async (message: IMessage) => {
-        let cardPlay: OnCardPlay = JSON.parse(message.body)
         await this.updateGameInfo()
+        let cardPlay: OnCardPlay = JSON.parse(message.body)
+        let getterNickname = this.getPlayerNicknameByIndex(cardPlay.getterIndex)
+        let senderNickname = this.getPlayerNicknameByIndex(cardPlay.senderIndex)
+
+        this.events.push({
+            eventType: EventType.CardPlay,
+            getterNickname: getterNickname,
+            senderNickname: senderNickname,
+            cardName: cardPlay.cardName
+        })
     }
 
     private onPlayerDeath = (message: IMessage) => {
         let playerDeath: PlayerDeath = JSON.parse(message.body)
 
         let nickname = this.getPlayerNicknameByIndex(playerDeath.playerIndex)
-        if (nickname == this.nickname){
+        if (nickname == this.nickname) {
             this.isDead = true
         } else {
             this.gameEntity!.players.splice(playerDeath.playerIndex, 1)

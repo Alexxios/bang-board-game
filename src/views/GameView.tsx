@@ -13,42 +13,10 @@ import {CardSelectionPanel} from "../ui/orgnisms/CardSelectionPanel";
 import {Navigate} from "react-router-dom";
 import {CardDescription} from '../ui/moleculas/CardDescription';
 import {CharacterDescription} from "../ui/moleculas/CharacterDescription";
+import {EventsBar} from "../ui/orgnisms/EventsBar";
+import {BottomDiv, LeftDiv, RightBottomDiv, RightDiv, TopDiv} from "../ui/styles/PositionDivs";
 
-const BottomDiv = styled.div`
-    display: flex;
-    position: absolute;
-    bottom: 0;
-    margin-bottom: 2%;
-    vertical-align: middle;
-`
 
-const TopDiv = styled.div`
-    display: flex;
-    flex-direction: row;
-    position: absolute;
-    margin-top: 1%;
-    left: 50%;
-    transform: translateX(-50%);
-`
-
-const LeftDiv = styled.div`
-    display: flex;
-    flex-direction: column-reverse;
-    align-items: center;
-    position: absolute;
-    left: 0;
-    top: 50%;
-    transform: translateY(-50%);
-`
-const RightDiv = styled.div`
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    position: absolute;
-    right: 0;
-    top: 50%;
-    transform: translateY(-50%);
-`
 
 const GameView = view(GameViewModel)(({viewModel}) => {
     const [players, setPlayers] = useState<PlayerProps[]>([])
@@ -127,7 +95,7 @@ const GameView = view(GameViewModel)(({viewModel}) => {
 
         {viewModel.isDead &&
             <CenterDiv>
-                <h1>You are dead</h1>
+                <h1>Вы умерли</h1>
             </CenterDiv>
         }
 
@@ -198,9 +166,12 @@ const GameView = view(GameViewModel)(({viewModel}) => {
                 }
             </BottomDiv>
 
+
         </CenterDiv>
 
-
+        <RightBottomDiv>
+            <EventsBar events={viewModel.events}/>
+        </RightBottomDiv>
     </div>
 })
 

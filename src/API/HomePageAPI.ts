@@ -11,7 +11,6 @@ class HomePageAPI extends API{
     }
 
     checkNickname = (nickname: string) => {
-        console.log('send');
         return HomePageAPI.api.get<NicknameCheckResult>(`/check-nickname?nickname=${nickname}`);
     }
 
@@ -20,7 +19,6 @@ class HomePageAPI extends API{
     }
 
     enterGame = (nickname: string, gameId: string) => {
-        console.log(nickname, gameId);
         return HomePageAPI.api.get<EnterGameResult>(`/enter-the-game/${nickname}/${gameId}`)
     }
 }
