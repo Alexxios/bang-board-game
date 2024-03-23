@@ -3,7 +3,7 @@ export enum Character{
     BlackJack = 'BlackJack',
     CalamityJanet = 'CalamityJanet',
     ElGringo = 'ElGringo',
-    JesseJones = 'JesseJones',
+    JesseJames = 'JesseJames',
     Jourdonnais = 'Jourdonnais',
     KitCarlson = 'KitCarlson',
     LuckyDuke = 'LuckyDuke',

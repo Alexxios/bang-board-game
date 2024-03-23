@@ -68,7 +68,7 @@ export class CharacterDescriptionMapper {
         [Character.BlackJack, this.blackJack],
         [Character.BartCassidy, this.bartCassidy],
         [Character.ElGringo, this.elGringo],
-        [Character.JesseJones, this.jesseJones],
+        [Character.JesseJames, this.jesseJones],
         [Character.CalamityJanet, this.calamityJanet],
         [Character.KitCarlson, this.kitCarlson],
         [Character.LuckyDuke, this.luckyDuke],

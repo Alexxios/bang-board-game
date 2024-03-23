@@ -6,6 +6,7 @@ export enum PlayingCardName {
     Volcanic = 'Volcanic',
     Carabine = 'Carabine',
     Schofield = 'Schofield',
+    Colt = 'Colt',
 
     //basic cards
     Bang = 'Bang',

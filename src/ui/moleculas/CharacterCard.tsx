@@ -1,6 +1,7 @@
 import React, {DragEventHandler} from "react";
 import styled from "styled-components";
 import {Character} from "../../enums/Character";
+import { CharacterNaming } from "../../naming/CharacterNaming";
 
 export const CardDiv = styled.div`
     border: solid 1px black;
@@ -9,7 +10,9 @@ export const CardDiv = styled.div`
 `
 
 export const CharacterCard = ({character, onClick} : {character: Character, onClick: Function}) => {
+    let characterNaming = new CharacterNaming()
+    console.log(character)
     return <CardDiv onClick={() => {onClick(character)}}>
-        <h3>{character}</h3>
+        <h3>{characterNaming.getName(character)}</h3>
     </CardDiv>
 }

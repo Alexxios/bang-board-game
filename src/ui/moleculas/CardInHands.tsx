@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import {PlayingCard} from "../../models/PlayingCard";
+import { CardNaming } from "../../naming/CardNaming";
 
 export const CardDiv = styled.div`
     border: solid 1px black;
@@ -17,11 +18,13 @@ export const CardInHands = ({isDraggable, card, onDragStart, index, onClick}: {
     index: number,
     onClick: Function
 }) => {
+    let cardNaming = new CardNaming()
+
     return <CardDiv draggable={isDraggable}
                     onDragStart={(e) => {
                         onDragStart(index);
                     }}
                     onClick={() => {onClick(card)}}>
-        <h3>{card.cardName}</h3>
+        <h3>{cardNaming.getName(card.cardName)}</h3>
     </CardDiv>
 }
