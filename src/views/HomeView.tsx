@@ -46,6 +46,11 @@ const HomeView = view(HomePageViewModel)(({viewModel}) => {
                 placeholder={"Введите свой ник"}
                 onChange={changeNickname}></input>
         </CenterDiv>
+
+        <CenterDiv>
+            {!viewModel.connectionError && <p>Неверный код игры или никнейм не уникален</p>}
+        </CenterDiv>
+
         <CenterDiv>
             <CreateGamePanel
                 playersCount={viewModel.currentPlayersCount}
@@ -60,19 +65,21 @@ const HomeView = view(HomePageViewModel)(({viewModel}) => {
                     )
                 }}
             />
-            <EnterGamePanel
-                onChange={changeGameId}
-                onClick={() => {
-                    let isValid = viewModel.enterGame(nickname, gameId)
-                    isValid.then(
-                        result => {
-                            if (result){
-                                redirect(gameId)
+                <EnterGamePanel
+                    onChange={changeGameId}
+                    onClick={() => {
+                        let isValid = viewModel.enterGame(nickname, gameId)
+                        isValid.then(
+                            result => {
+                                if (result){
+                                    redirect(gameId)
+                                }
                             }
-                        }
-                    )
-                }}/>
+                        )
+                    }}/>
+
         </CenterDiv>
+
     </>
 })
 

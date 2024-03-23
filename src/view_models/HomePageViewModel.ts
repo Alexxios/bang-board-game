@@ -3,6 +3,7 @@ import {makeObservable, observable} from "mobx";
 import {HomePageRepository} from "../repositories/HomePageRepository";
 import {injectable} from "tsyringe";
 import HomePageAPI from "../API/HomePageAPI";
+import {collectStoredAnnotations} from "mobx/dist/api/decorators";
 
 @injectable()
 class HomePageViewModel extends ViewModel {
@@ -10,6 +11,7 @@ class HomePageViewModel extends ViewModel {
     private readonly minPlayersCount = 2
 
     @observable currentPlayersCount: number
+    @observable connectionError: boolean = true
 
     constructor(private app: HomePageRepository) {
         super()
@@ -38,22 +40,22 @@ class HomePageViewModel extends ViewModel {
     }
 
     enterGame = async (nickname: string, gameId: string) => {
-        let isValid = false
+        this.connectionError = false
         await this.checkUserNickname(nickname).then(
             async result => {
                 if (result){
                     localStorage.setItem('nickname', nickname)
                     await this.app.enterGame(nickname, gameId).then(
                         data => {
-                            isValid = data
+                            this.connectionError = data
                             localStorage.setItem('gameId', gameId)
                         }
                     )
                 }
             }
         )
-
-        return isValid
+        console.log(this.connectionError)
+        return this.connectionError
     }
 
     incrementPlayersCount = () => {
@@ -80,7 +82,6 @@ class HomePageViewModel extends ViewModel {
         let result = false;
         await this.app.checkNickname(nickname).then(
             data => {
-                console.log(data)
                 result = data
             }
         )
