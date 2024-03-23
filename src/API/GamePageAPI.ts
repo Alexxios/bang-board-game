@@ -6,6 +6,7 @@ import {GameId} from "../models/GameId";
 import {GamePageRepository} from "../repositories/GamePageRepository";
 import {GameEntity} from "../models/GameEntity";
 import {GameEvent} from "../models/GameEvent";
+import {EventHandlingResult} from "../models/EventHandlingResult";
 
 @injectable()
 class GamePageAPI extends API{
@@ -31,7 +32,7 @@ class GamePageAPI extends API{
     }
 
     sendEvent = (gameId: string, event: GameEvent) => {
-        GamePageAPI.api.post(`/handle-event?gameId=${gameId}`, event)
+        return GamePageAPI.api.post<EventHandlingResult>(`/handle-event?gameId=${gameId}`, event)
     }
 
 }

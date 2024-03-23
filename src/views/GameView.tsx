@@ -155,15 +155,24 @@ const GameView = view(GameViewModel)(({viewModel}) => {
         </BottomDiv>
 
         <CenterDiv>
+
             <BottomDiv>
-                {players.map(playerProps => {
-                    if (playerProps.nickname === viewModel.getNickname()) {
-                        return <CurrentPlayerGameTablet props={playerProps} dragProps={dragProps}
-                                                        onCardClick={viewModel.showCardDescription}
-                                                        onCharacterClick={viewModel.showCharacterDescription}/>
-                    }
-                })
-                }
+                <div style={{display: 'block'}}>
+                    <CenterDiv>
+                        {viewModel.failedEventHandling && <p>Невозможно применить эту карту</p>}
+                    </CenterDiv>
+
+                    <div style={{display: 'flex'}}>
+                        {players.map(playerProps => {
+                            if (playerProps.nickname === viewModel.getNickname()) {
+                                return <CurrentPlayerGameTablet props={playerProps} dragProps={dragProps}
+                                                                onCardClick={viewModel.showCardDescription}
+                                                                onCharacterClick={viewModel.showCharacterDescription}/>
+                            }
+                        })
+                        }
+                    </div>
+                </div>
             </BottomDiv>
 
 

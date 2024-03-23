@@ -77,7 +77,7 @@ export class GamePageRepository {
     }
 
     sendEvent = async (gameId: string, event: GameEvent) => {
-        await this.api.sendEvent(gameId, event)
+        return await this.api.sendEvent(gameId, event)
     }
 
 }

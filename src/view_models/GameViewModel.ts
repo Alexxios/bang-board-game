@@ -14,6 +14,7 @@ import {MatchEnd} from "../models/MatchEnd";
 import {Event} from "../enums/Event";
 import {Character} from "../enums/Character";
 import {EventType} from "../enums/EventType";
+import {HandlingResult} from "../enums/HandlingResult";
 
 export class CardDescriptionShowingProps {
     constructor(needToShow: boolean, card: PlayingCard) {
@@ -45,6 +46,7 @@ class GameViewModel extends ViewModel {
     @observable gameIdEntity: undefined | GameId
     @observable events: Event[] = []
     @observable cards: PlayingCard[] = []
+    @observable failedEventHandling: boolean = false
     @observable isDead: boolean = false
     @observable isEnded: boolean = false
     @observable cardDescriptionShowing: CardDescriptionShowingProps | undefined
@@ -74,11 +76,20 @@ class GameViewModel extends ViewModel {
     }
 
     public nextMotion = async () => {
+        this.failedEventHandling = false
         this.app.nextMotion(this.gameId)
     }
 
     public sendEvent = async (event: GameEvent) => {
-        await this.app.sendEvent(this.gameId, event)
+        this.failedEventHandling = false
+        await this.app.sendEvent(this.gameId, event).then(
+            result => {
+                let handlingResult = result.data
+                if (handlingResult.handlingResult === HandlingResult.Failed){
+                    this.failedEventHandling = true
+                }
+            }
+        )
     }
 
     public getPlayerIndexByNickname = (nickname: string) => {
