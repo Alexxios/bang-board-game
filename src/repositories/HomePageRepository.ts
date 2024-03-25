@@ -12,7 +12,6 @@ export class HomePageRepository {
 
     checkNickname = async (nickname: string) => {
         const data = await this.api.checkNickname(nickname);
-
         return data.data.result;
     }
 
@@ -24,5 +23,9 @@ export class HomePageRepository {
     enterGame = async (nickname: string, gameId: string) => {
         const data = await this.api.enterGame(nickname, gameId);
         return data.data.result;
+    }
+
+    addUser = (nickname: string) => {
+        this.api.addUser(nickname)
     }
 }

@@ -73,7 +73,7 @@ export class CharacterDescriptionMapper {
         [Character.KitCarlson, this.kitCarlson],
         [Character.LuckyDuke, this.luckyDuke],
         [Character.PaulRegrez, this.paulRegret],
-        [Character.PedroRemirez, this.pedroRamirez],
+        [Character.PedroRamirez, this.pedroRamirez],
         [Character.RoseDoolan, this.roseDoolan],
         [Character.SidKetchum, this.sidKetchum],
         [Character.SuzyLafayette, this.suzyLafayette],

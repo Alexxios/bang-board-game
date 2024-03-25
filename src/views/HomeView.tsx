@@ -60,7 +60,9 @@ const HomeView = view(HomePageViewModel)(({viewModel}) => {
                     let gameId = viewModel.createGame(nickname)
                     gameId.then(
                         gameId => {
-                            redirect(gameId)
+                            if (gameId !== undefined){
+                                redirect(gameId!)
+                            }
                         }
                     )
                 }}
@@ -71,7 +73,7 @@ const HomeView = view(HomePageViewModel)(({viewModel}) => {
                         let isValid = viewModel.enterGame(nickname, gameId)
                         isValid.then(
                             result => {
-                                if (result){
+                                if (!result){
                                     redirect(gameId)
                                 }
                             }

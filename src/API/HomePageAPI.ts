@@ -14,8 +14,12 @@ class HomePageAPI extends API{
         return HomePageAPI.api.get<NicknameCheckResult>(`/check-nickname?nickname=${nickname}`);
     }
 
-    createGame = (nickname: string, playerCount: number) => {
-        return HomePageAPI.api.post<string>(`/create-game/${nickname}/${playerCount}`);
+    createGame = (nickname: string, playersCount: number) => {
+        return HomePageAPI.api.post<string>(`/create-game/${nickname}/${playersCount}`);
+    }
+
+    addUser = (nickname: string) => {
+        HomePageAPI.api.post(`/add-user/${nickname}`)
     }
 
     enterGame = (nickname: string, gameId: string) => {

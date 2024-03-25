@@ -15,6 +15,7 @@ import {Event} from "../enums/Event";
 import {Character} from "../enums/Character";
 import {EventType} from "../enums/EventType";
 import {HandlingResult} from "../enums/HandlingResult";
+import {Player} from "../models/Player";
 
 export class CardDescriptionShowingProps {
     constructor(needToShow: boolean, card: PlayingCard) {
@@ -60,8 +61,8 @@ class GameViewModel extends ViewModel {
         this.app = new GamePageRepository(new GamePageAPI(), this.gameId, this.nickname, this.gameEvents)
 
         this.app.initGame(this.gameId).then(
-            () => {
-                this.updateGameInfo()
+            async () => {
+                await this.updateGameInfo()
             }
         )
 
@@ -153,8 +154,12 @@ class GameViewModel extends ViewModel {
     }
 
     private onMatchEnd = (message: IMessage) => {
+        console.log('ended')
         let matchEndInfo: MatchEnd = JSON.parse(message.body)
         let player = this.gameEntity!.players[matchEndInfo.winnerIndex]
+        for (let currentPlayer of this.gameIdEntity!.players){
+            this.app.deleteUser(currentPlayer.nickname)
+        }
         localStorage.setItem('winnerRole', player.role)
         localStorage.setItem('winnerNickname', this.getPlayerNicknameByIndex(matchEndInfo.winnerIndex))
         this.isEnded = true

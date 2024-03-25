@@ -21,21 +21,24 @@ class HomePageViewModel extends ViewModel {
     }
 
     createGame = async (nickname: string) => {
-        let gameId = ''
+        let gameId: string | undefined = undefined
         await this.checkUserNickname(nickname).then(
             async result => {
-                if (result){
+                console.log(result)
+                if (!result){
                     localStorage.setItem('nickname', nickname)
+                    this.addUser(nickname)
                     await this.app.createGame(nickname, this.currentPlayersCount).then(
                         data => {
                             gameId = data.data
                             localStorage.setItem('gameId', gameId)
                         }
                     )
+                }else {
+                    this.connectionError = false
                 }
             }
         )
-
         return gameId
     }
 
@@ -43,18 +46,20 @@ class HomePageViewModel extends ViewModel {
         this.connectionError = false
         await this.checkUserNickname(nickname).then(
             async result => {
-                if (result){
+                console.log(result)
+                if (!result){
                     localStorage.setItem('nickname', nickname)
+                    this.addUser(nickname)
                     await this.app.enterGame(nickname, gameId).then(
                         data => {
-                            this.connectionError = data
+                            this.connectionError = !data
                             localStorage.setItem('gameId', gameId)
                         }
                     )
                 }
             }
         )
-        console.log(this.connectionError)
+
         return this.connectionError
     }
 
@@ -87,6 +92,10 @@ class HomePageViewModel extends ViewModel {
         )
 
         return result
+    }
+
+    private addUser = (nickname: string) => {
+        this.app.addUser(nickname)
     }
 }
 

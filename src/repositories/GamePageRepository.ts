@@ -80,4 +80,8 @@ export class GamePageRepository {
         return await this.api.sendEvent(gameId, event)
     }
 
+    deleteUser = (nickname: string) => {
+        this.api.deleteUser(nickname)
+    }
+
 }

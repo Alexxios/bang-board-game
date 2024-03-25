@@ -13,7 +13,7 @@ export class CharacterNaming {
         [Character.KitCarlson, 'Кит Карлсон'],
         [Character.LuckyDuke, 'Везучий Дюк'],
         [Character.PaulRegrez, 'Пол Регрез'],
-        [Character.PedroRemirez, 'Педро Рамирес'],
+        [Character.PedroRamirez, 'Педро Рамирес'],
         [Character.RoseDoolan, 'Роза Дулан'],
         [Character.SidKetchum, 'Сид Кетчум'],
         [Character.SlabTheKiller, 'Слеб убийца'],

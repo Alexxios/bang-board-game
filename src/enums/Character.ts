@@ -8,7 +8,7 @@ export enum Character{
     KitCarlson = 'KitCarlson',
     LuckyDuke = 'LuckyDuke',
     PaulRegrez = 'PaulRegret',
-    PedroRemirez = 'PedroRemirez',
+    PedroRamirez = 'PedroRamirez',
     RoseDoolan = 'RoseDoolan',
     SidKetchum = 'SidKetchum',
     SlabTheKiller = 'SlabTheKiller',

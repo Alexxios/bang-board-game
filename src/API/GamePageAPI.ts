@@ -35,6 +35,10 @@ class GamePageAPI extends API{
         return GamePageAPI.api.post<EventHandlingResult>(`/handle-event?gameId=${gameId}`, event)
     }
 
+    deleteUser = (nickname: string) => {
+        GamePageAPI.api.delete(`/delete-user/${nickname}`)
+    }
+
 }
 
 export default GamePageAPI;
