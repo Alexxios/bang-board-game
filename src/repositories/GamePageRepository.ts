@@ -14,7 +14,7 @@ import {SERVER_WEB_SOCKET_ADDRESS} from "../config";
 export class GamePageRepository {
     private stompClient: CompatClient
 
-    constructor(private api: GamePageAPI, gameId: string, nickname: string, gameEvents: GameEventsHolder) {
+    constructor(private api: GamePageAPI, gameId: string, gameEvents: GameEventsHolder) {
         makeObservable(this)
 
 

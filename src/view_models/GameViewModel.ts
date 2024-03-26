@@ -58,7 +58,7 @@ class GameViewModel extends ViewModel {
         makeObservable(this)
         this.gameId = localStorage.getItem('gameId')!
         this.nickname = localStorage.getItem('nickname')!
-        this.app = new GamePageRepository(new GamePageAPI(), this.gameId, this.nickname, this.gameEvents)
+        this.app = new GamePageRepository(new GamePageAPI(), this.gameId, this.gameEvents)
 
         this.app.initGame(this.gameId).then(
             async () => {
