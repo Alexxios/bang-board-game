@@ -24,7 +24,6 @@ class HomePageViewModel extends ViewModel {
         let gameId: string | undefined = undefined
         await this.checkUserNickname(nickname).then(
             async result => {
-                console.log(result)
                 if (!result){
                     localStorage.setItem('nickname', nickname)
                     this.addUser(nickname)
@@ -46,7 +45,6 @@ class HomePageViewModel extends ViewModel {
         this.connectionError = false
         await this.checkUserNickname(nickname).then(
             async result => {
-                console.log(result)
                 if (!result){
                     localStorage.setItem('nickname', nickname)
                     this.addUser(nickname)

@@ -15,7 +15,6 @@ const HomeView = view(HomePageViewModel)(({viewModel}) => {
     const [isNeedNavigation, setIsNeedNavigation] = useState(false)
     const [nickname, setNickName] = useState('')
     const [gameId, setGameId] = useState('')
-    const [playersCount, setPlayersCount] = useState(4)
 
     const changeNickname = (event: ChangeEvent<HTMLInputElement>) => {
         setNickName(event.target.value)
@@ -24,8 +23,6 @@ const HomeView = view(HomePageViewModel)(({viewModel}) => {
     const changeGameId = (event: ChangeEvent<HTMLInputElement>) => {
         setGameId(event.target.value)
     }
-
-    let navigate = useNavigate()
 
     const redirect = (gameId: string) => {
         setIsNeedNavigation(true)

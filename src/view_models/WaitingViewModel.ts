@@ -18,15 +18,10 @@ class WaitingViewModel extends ViewModel {
     constructor(private app: WaitingPageRepository) {
         super()
         makeObservable(this)
-
-
-
         this.gameId = localStorage.getItem('gameId')!
         this.nickname = localStorage.getItem('nickname')!
         this.app = new WaitingPageRepository(new WaitingPageAPI(), this.gameId, this.nickname, this.onMessage)
         this.isRaady = false
-
-
     }
 
     closeConnection = () => {

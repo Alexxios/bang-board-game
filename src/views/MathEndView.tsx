@@ -14,8 +14,6 @@ const MathEndView = view(MatchEndViewModel)(({viewModel}) => {
         return <Navigate to={'/'}/>
     }
 
-    let roleNaming = new RoleNaming()
-
     return <CenterDiv>
         <div style={{display: 'block'}}>
             <h1>Игра окончена</h1>
