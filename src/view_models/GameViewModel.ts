@@ -72,10 +72,6 @@ class GameViewModel extends ViewModel {
         return this.nickname
     }
 
-    public getMathEndInfo = () => {
-        return this.matchEndInfo
-    }
-
     public nextMotion = async () => {
         this.failedEventHandling = false
         this.app.nextMotion(this.gameId)
@@ -154,7 +150,6 @@ class GameViewModel extends ViewModel {
     }
 
     private onMatchEnd = (message: IMessage) => {
-        console.log('ended')
         let matchEndInfo: MatchEnd = JSON.parse(message.body)
         let player = this.gameEntity!.players[matchEndInfo.winnerIndex]
         for (let currentPlayer of this.gameIdEntity!.players){
