@@ -148,7 +148,7 @@ const GameView = view(GameViewModel)(({viewModel}) => {
         }
 
         <BottomDiv>
-            <div style={{marginLeft: 400}}>
+            <div style={{marginLeft: 80}}>
                 {isLoaded && isDoingMotion &&
                     <NextMotionButton onClick={viewModel.nextMotion}/>}
             </div>

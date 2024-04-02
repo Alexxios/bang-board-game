@@ -10,6 +10,8 @@ import BulletImage from "../../assets/bullet.png";
 import { RoleNaming } from '../../naming/RoleNaming';
 import { CharacterNaming } from '../../naming/CharacterNaming';
 
+import styles from "../../styles.module.css";
+
 export const CurrentPlayerGameTablet = ({props, dragProps, onCardClick, onCharacterClick}: {
     props: PlayerProps, dragProps: DragProps, onCardClick: Function, onCharacterClick: Function}) => {
 
@@ -21,7 +23,7 @@ export const CurrentPlayerGameTablet = ({props, dragProps, onCardClick, onCharac
     let roleNaming = new RoleNaming()
  
 
-    return <Panel>
+    return <div className={styles.player}>
         <h1 onDrop={(e) => {
             e.preventDefault();
             dragProps.onPanelDrop(props.nickname);
@@ -54,5 +56,5 @@ export const CurrentPlayerGameTablet = ({props, dragProps, onCardClick, onCharac
         </CenterDiv>
 
 
-    </Panel>
+    </div>
 }

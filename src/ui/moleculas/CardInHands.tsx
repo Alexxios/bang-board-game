@@ -27,6 +27,13 @@ import Saloon from "../../assets/cards/saloon.png";
 import Scope from "../../assets/cards/scope.png";
 import Stagecoach from "../../assets/cards/stagecoach.png";
 import WellsFargo from "../../assets/cards/wellsFargo.png";
+import Remington from "../../assets/cards/remington.png";
+import RevCarabine from "../../assets/cards/revCarabine.png";
+import Schofield from "../../assets/cards/schofield.png";
+import Volcanic from "../../assets/cards/volcanic.png";
+import Winchester from "../../assets/cards/winchester.png";
+
+import styles from "../../styles.module.css";
 
 export const CardDiv = styled.div`
     border: solid 1px black;
@@ -69,7 +76,12 @@ const cardMap = new Map<PlayingCardName, string>([
     [PlayingCardName.Panic, Panic],
     [PlayingCardName.Saloon, Saloon],
     [PlayingCardName.Diligenza, Stagecoach],
-    [PlayingCardName.WellsFargo, WellsFargo] 
+    [PlayingCardName.WellsFargo, WellsFargo], 
+    [PlayingCardName.Remington, Remington],
+    [PlayingCardName.Carabine, RevCarabine],
+    [PlayingCardName.Schofield, Schofield],
+    [PlayingCardName.Volcanic, Volcanic],
+    [PlayingCardName.Winchester, Winchester]
 ])
 
 export const CardInHands = ({isDraggable, card, onDragStart, index, onClick}: {
@@ -85,9 +97,10 @@ export const CardInHands = ({isDraggable, card, onDragStart, index, onClick}: {
                     onDragStart={(e) => {
                         onDragStart(index);
                     }}
-                    onClick={() => {onClick(card)}}>
-        <h3>{cardNaming.getName(card.cardName)}</h3>
-        <img src={cardMap.get(card.cardName)} width={80}/>
-        <p style={{fontSize: 24}}><b>{numberMap.get(card.number)}</b><img src={suitsMap.get(card.suit)} width={18}/></p>
+                    onClick={() => {onClick(card)}}
+                    style={{backgroundColor:"white", color:"#DF7453"}}>
+        <h3 style={{margin:5}}>{cardNaming.getName(card.cardName)}</h3>
+        <img src={cardMap.get(card.cardName)} width={80} style={{margin:0}}/>
+        <p style={{fontSize: 24, margin:0}}><b>{numberMap.get(card.number)}</b><img src={suitsMap.get(card.suit)} width={18}/></p>
     </CardDiv>
 }

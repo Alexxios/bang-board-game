@@ -3,6 +3,7 @@ import {Event} from "../../enums/Event";
 import {EventType} from "../../enums/EventType";
 import {BottomDiv} from "../styles/PositionDivs";
 import {CardNaming} from "../../naming/CardNaming";
+import styles from "../../styles.module.css";
 
 const formatEvent = (event: Event) => {
     if (event.eventType == EventType.CardPlay){
@@ -22,12 +23,12 @@ const formatEvent = (event: Event) => {
 
 export const EventsBar = ({events} : {events: Event[]}) => {
     let formattedEvents = events.map(event => formatEvent(event))
-    return <Panel style={{height: 300, width: 600}}>
+    return <div className={styles.panel} style={{width:200, height:305}}>
         <h3>События</h3>
         <BottomDiv style={{height: 250}}>
             <div style={{ overflowY: 'scroll', width: 'auto'}}>
                 {formattedEvents.map(event => <p>{event}</p>)}
             </div>
         </BottomDiv>
-    </Panel>
+    </div>
 }

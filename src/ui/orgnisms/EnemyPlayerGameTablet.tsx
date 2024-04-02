@@ -6,6 +6,7 @@ import {WeaponCard} from "../moleculas/WeaponCard";
 import {CharacterCard} from "../moleculas/CharacterCard";
 import BulletImage from "../../assets/bullet.png"
 import { RoleNaming } from '../../naming/RoleNaming';
+import styles from '../../styles.module.css';
 
 export const EnemyPlayerGameTablet = ({props, onDrop, onCharacterClick}: { props: PlayerProps, onDrop: Function, onCharacterClick: Function }) => {
 
@@ -20,7 +21,7 @@ export const EnemyPlayerGameTablet = ({props, onDrop, onCharacterClick}: { props
         role = roleNaming.getName(Role.Sheriff)!;
     }
     
-    return <Panel style={{marginTop:10, marginBottom:10}} onDrop={() => {
+    return <div className={styles.player} style={{marginTop:10, marginBottom:10}} onDrop={() => {
         onDrop(props.nickname)
     }}
                   onDragOver={(e) => {
@@ -34,5 +35,5 @@ export const EnemyPlayerGameTablet = ({props, onDrop, onCharacterClick}: { props
         </div>
         <WeaponCard card={props.weapon} canDropOn={false} onDrop={() => {}}/>
         <CharacterCard character={props.character} onClick={onCharacterClick}/>
-    </Panel>
+    </div>
 }

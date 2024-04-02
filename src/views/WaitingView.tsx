@@ -6,7 +6,7 @@ import useHistory, {Navigate} from 'react-router-dom';
 import styled from "styled-components";
 import {PlayerWaitingPanel} from "../ui/orgnisms/PlayerWaitingPanel";
 
-const styles = require("../styles.module.css");
+import styles from "../styles.module.css";
 
 const CenterDiv = styled.div`
     display: flex;
@@ -23,10 +23,10 @@ const WaitingView = view(WaitingViewModel)(({viewModel}) => {
     return <>
         <div>
             <CenterDiv>
-                <h1 style={styles.header}>Код игры: {viewModel.gameId}</h1>
+                <h1 className={styles.h1}>Код игры: {viewModel.gameId}</h1>
             </CenterDiv>
             <CenterDiv>
-                <h1 style={styles.header}>Игроков: {viewModel.players.length}</h1>
+                <h1 className={styles.h1}>Игроков: {viewModel.players.length}</h1>
             </CenterDiv>
             <CenterDiv>
             {viewModel.players.map(player => {
