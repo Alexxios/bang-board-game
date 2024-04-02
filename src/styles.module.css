@@ -52,3 +52,19 @@ body {
   color: #DF7453;
   -webkit-text-stroke: 1px black;
 }
+
+.player {
+  font-family: 'Marmelad';
+  text-align: center;
+  
+  color: #7B4D09;
+  background-image: url("../src/assets/plank.png");
+  background-size: 100%;
+
+  border-radius: 10px;
+  display: inline;
+  justify-content: center;
+  padding: 10px;
+  border: 3px solid #AB7A30;
+  margin: 0 100px;
+}
