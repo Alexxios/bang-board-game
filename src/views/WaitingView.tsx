@@ -6,6 +6,7 @@ import useHistory, {Navigate} from 'react-router-dom';
 import styled from "styled-components";
 import {PlayerWaitingPanel} from "../ui/orgnisms/PlayerWaitingPanel";
 
+import BulletImage from "../assets/bullet.png";
 import styles from "../styles.module.css";
 
 const CenterDiv = styled.div`
@@ -20,19 +21,23 @@ const WaitingView = view(WaitingViewModel)(({viewModel}) => {
         return <Navigate to={`/game/${viewModel.gameId}`}/>
     }
 
+    let bullets = []
+    for (let i = 0; i < viewModel.players.length; ++i){
+        bullets.push(<img src={BulletImage} width={100} />)
+    }
+
     return <>
         <div>
             <CenterDiv>
                 <h1 className={styles.h1}>Код игры: {viewModel.gameId}</h1>
             </CenterDiv>
             <CenterDiv>
-                <h1 className={styles.h1}>Игроков: {viewModel.players.length}</h1>
+                <h1 className={styles.h1}>Игроков: {viewModel.players.length} / {viewModel.maxPlayers}</h1>
             </CenterDiv>
             <CenterDiv>
-            {viewModel.players.map(player => {
-                    return <PlayerWaitingPanel nickName={player.nickname}></PlayerWaitingPanel>
-                })}
+                {bullets}
             </CenterDiv>
+            
         </div>
 
     </>

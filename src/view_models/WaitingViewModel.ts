@@ -13,6 +13,7 @@ class WaitingViewModel extends ViewModel {
     @observable players: PlayerId[] = []
     @observable gameId: string
     @observable isRaady: boolean
+    @observable maxPlayers: number
     private nickname: string
 
     constructor(private app: WaitingPageRepository) {
@@ -22,6 +23,7 @@ class WaitingViewModel extends ViewModel {
         this.nickname = localStorage.getItem('nickname')!
         this.app = new WaitingPageRepository(new WaitingPageAPI(), this.gameId, this.nickname, this.onMessage)
         this.isRaady = false
+        this.maxPlayers = 0
     }
 
     closeConnection = () => {
@@ -36,6 +38,7 @@ class WaitingViewModel extends ViewModel {
 
         await this.app.getGame(this.gameId).then(
             response => {
+                this.maxPlayers = response.maxPlayersCount;
                 if (this.players.length == response.maxPlayersCount){ // КОСТЫЛЬ!!! УБРАТЬ!!!
                     this.isRaady = true
                 }
