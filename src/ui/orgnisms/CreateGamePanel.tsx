@@ -1,5 +1,6 @@
 import React, {ChangeEvent, EventHandler, MouseEventHandler} from "react";
 import {Panel} from "./styles/PanelDiv";
+import styles from "../../styles.module.css";
 
 const CreateGamePanel = ({playersCount, incrementOnClick, decrementOnClick, onClick}: {
     playersCount: number
@@ -7,16 +8,16 @@ const CreateGamePanel = ({playersCount, incrementOnClick, decrementOnClick, onCl
     decrementOnClick: MouseEventHandler<HTMLButtonElement>,
     onClick: MouseEventHandler<HTMLButtonElement>
 }) => {
-    return <Panel>
-        <p>Создать игру</p>
-        <div style={{display: "flex"}}>
+    return <div className={styles.panel}>
+        <p style={{fontSize: 48}}>СОЗДАТЬ ИГРУ</p>
+        <div style={{display: "flex", justifyContent:'center'}}>
             <p>Количество игроков</p>
-            <button onClick={decrementOnClick}>{"<"}</button>
+            <button style={{borderColor:'#DF7453', borderRadius:'50%', background:0, color:'#DF7453',paddingInline:14, margin:5}} onClick={decrementOnClick}>{"<"}</button>
             <p>{playersCount}</p>
-            <button onClick={incrementOnClick}>{">"}</button>
+            <button style={{borderColor:'#DF7453', borderRadius:'50%', background:0, color:'#DF7453',paddingInline:14, margin:5}} onClick={incrementOnClick}>{">"}</button>
         </div>
-        <button onClick={onClick}>Создать игру!</button>
-    </Panel>
+        <button className={styles.button} style={{fontSize:22}} onClick={onClick}>Создать игру!</button>
+    </div>
 }
 
 export default CreateGamePanel;

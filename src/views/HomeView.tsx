@@ -6,6 +6,8 @@ import {view} from "@yoskutik/react-vvm";
 import HomePageViewModel from "../view_models/HomePageViewModel";
 import {Navigate, useNavigate} from "react-router-dom";
 
+import styles from "../styles.module.css";
+
 export const CenterDiv = styled.div`
     display: flex;
     justify-content: center
@@ -34,12 +36,12 @@ const HomeView = view(HomePageViewModel)(({viewModel}) => {
     }
 
     return <>
-        <CenterDiv>
-            <h1>БЭНГ!</h1>
+        <CenterDiv style={{marginTop:90}}>
+            <h1 className={styles.h1}>БЭНГ!</h1>
         </CenterDiv>
         <CenterDiv>
-            <input
-                style={{margin: 40}}
+            <input className={styles.entry}
+                style={{marginBottom: 40, height:40}}
                 placeholder={"Введите свой ник"}
                 onChange={changeNickname}></input>
         </CenterDiv>

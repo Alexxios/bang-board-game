@@ -10,6 +10,8 @@ import GameView from "./views/GameView";
 import MatchEndViewModel from "./view_models/MatchEndViewModel";
 import MathEndView from "./views/MathEndView";
 
+import styles from "./styles.module.css";
+
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
@@ -32,7 +34,6 @@ const router = createBrowserRouter([
         element: <MathEndView/>
     }
 ]);
-
 
 root.render(
     <RouterProvider router={router}/>
